@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #eef2f6;
+    --text-main: #1e293b;
+    --blueprint-dot: #cbd5e1;
+    --blueprint-line: #e2e8f0;
+    --room-bg: #ffffff;
+    --room-corridor: rgba(15, 23, 42, 0.05);
+    --boundary-stroke: rgba(15, 23, 42, 0.25);
+  }
+  
+  .dark {
+    --bg-main: #0d0d0d;
+    --text-main: #ffffff;
+    --blueprint-dot: #333333;
+    --blueprint-line: #1a1a1a;
+    --room-bg: #121212;
+    --room-corridor: rgba(255, 255, 255, 0.03);
+    --boundary-stroke: rgba(255, 255, 255, 0.15);
+  }
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Monaco', 'Consolas', monospace;
+  margin: 0;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.blueprint-grid {
+  background-color: var(--bg-main);
+  background-image: radial-gradient(circle, var(--blueprint-dot) 1px, transparent 1px);
+  background-size: 30px 30px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.blueprint-lines {
+  background-color: var(--bg-main);
+  background-image: 
+    linear-gradient(to right, var(--blueprint-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--blueprint-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  
+  .animate-shimmer {
+    display: none !important;
+  }
+
+  .animate-scan {
+    animation: scan 8s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-scan-slow {
+    animation: scan 12s linear infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+/* Custom scrollbar for dark/light theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}

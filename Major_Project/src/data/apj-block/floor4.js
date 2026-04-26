@@ -1,0 +1,68 @@
+export const floor4 = {
+    buildingName: "APJ-BLOCK",
+    label: "4th Floor",
+    viewWidth: 640,
+    viewHeight: 663,
+    mainWidth: 455,
+    bulgeWidth: 165,
+    bulgeHeight: 200,
+    rooms: [
+      // LEFT COLUMN (Col 1)
+      { id: "staff-room-top-left", name: "STAFF ROOM", x: 35, y: 30, w: 90, h: 45, type: "staffroom", description: "Top left staff space", department: "CSE", capacity: 5, image: "/apj-block-images/4th-floor/sr1.jpeg", directions: "i. Stairs-1: Turn right, cross the center area to the left side of the building, then turn right and walk to the very top.\nii. Stairs-2: Turn left towards the left side of the building, turn right and walk all the way up.\niii. LIFT: Turn left to the left wall, then turn right and walk all the way up.", tags: ["office", "staff", "cse", "teachers"] },
+      { id: "csl-06", name: "CSL 06", x: 35, y: 95, w: 90, h: 40, type: "lab", description: "Computer Science Lab 06", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl06.jpeg", directions: "i. Stairs-1: Turn right, cross over to the left side of the floor, turn right and walk past CSL 05.\nii. Stairs-2: Turn left towards the left hallway, turn right and walk straight up past the Washroom.\niii. LIFT: Turn left to the left hallway, turn right and walk past CSL 05.", tags: ["lab", "computer", "cse", "csl", "6"] },
+      { id: "csl-05", name: "CSL 05", x: 35, y: 155, w: 90, h: 40, type: "lab", description: "Computer Science Lab 05", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl05.jpeg", directions: "i. Stairs-1: Turn right, cross over to the left area, turn right and it will be on your left.\nii. Stairs-2: Turn left to the left side, turn right and walk past the Washroom.\niii. LIFT: Turn left across the hall, then turn right and it is immediately there.", tags: ["lab", "computer", "cse", "csl", "5"] },
+      { id: "washroom-4", name: "WASHROOM", x: 35, y: 215, w: 90, h: 80, type: "utility", description: "Restroom facilities", department: "Facility", capacity: 0, image: "https://placehold.co/400x600?text=Washroom", directions: "i. Stairs-1: Turn right and cross straight into the middle intersection, it is right there.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past the HOD.\niii. LIFT: Turn left and walk straight, the washroom is exactly in front of you.", tags: ["toilet", "restroom"] },
+      { id: "cse-hod-cabin", name: "CSE HOD", x: 35, y: 315, w: 90, h: 80, type: "hod", description: "Head of CSE Department", department: "CSE", capacity: 5, image: "/apj-block-images/4th-floor/hod-cse.jpeg", directions: "i. Stairs-1: Turn right, walk towards the Washroom, then turn left.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past CSL 03.\niii. LIFT: Turn left, walk straight, and it is immediately on your right.", tags: ["hod", "head", "office", "cse", "boss", "chairman"] },
+      { id: "csl-03", name: "CSL 03", x: 35, y: 450, w: 90, h: 40, type: "lab", description: "Computer Science Lab 03", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl03.jpeg", directions: "i. Stairs-1: Turn right, cross towards the left side, turn left and walk past the HOD.\nii. Stairs-2: Turn left to the left hallway, and turn right to walk past CSL 04.\niii. LIFT: Turn left to the left side, then turn left to walk past the HOD.", tags: ["lab", "computer"] },
+      { id: "csl-04", name: "CSL 04", x: 35, y: 520, w: 90, h: 40, type: "lab", description: "Computer Science Lab 04", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl04.jpeg", directions: "i. Stairs-1: Turn right, cross to the left side, turn left and walk all the way down past CSL 03.\nii. Stairs-2: Turn left to the left side, and it is the first room on your left.\niii. LIFT: Turn left to the left side, turn left and walk to the very end.", tags: ["lab", "computer"] },
+
+      // RIGHT COLUMN (Col 4)
+      { id: "isl-03", name: "ISL 03", x: 360, y: 95, w: 90, h: 40, type: "lab", description: "Information Science Lab 03", department: "ISE", capacity: 40, image: "/apj-block-images/4th-floor/isl03.jpeg", directions: "i. Stairs-1: Turn left and walk up past ISL 02.\nii. Stairs-2: Walk straight ahead along the right side passing the middle area.\niii. LIFT: Turn right, then turn left and walk past ISL 02.", tags: ["lab", "ise", "isl", "information", "3"] },
+      { id: "isl-02", name: "ISL 02", x: 360, y: 155, w: 90, h: 40, type: "lab", description: "Information Science Lab 02", department: "ISE", capacity: 40, image: "/apj-block-images/4th-floor/isl02.jpeg", directions: "i. Stairs-1: Turn left, and it is the very first room on your right.\nii. Stairs-2: Walk straight ahead along the right side, just past the middle intersection.\niii. LIFT: Turn right, then turn left. It is immediately on your right.", tags: ["lab", "ise", "isl", "information", "2"] },
+      { id: "isl-01", name: "ISL 01", x: 360, y: 450, w: 90, h: 40, type: "lab", description: "Information Science Lab 01", department: "ISE", capacity: 40, image: "/apj-block-images/4th-floor/isl01.jpeg", directions: "i. Stairs-1: Turn right and walk down past the Server Room.\nii. Stairs-2: Walk straight ahead past CSL 02.\niii. LIFT: Turn right, then turn right and walk down. It is on your left.", tags: ["lab", "ise"] },
+      { id: "csl-02", name: "CSL 02", x: 360, y: 520, w: 90, h: 40, type: "lab", description: "Computer Science Lab 02", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl02.jpeg", directions: "i. Stairs-1: Turn right and walk down past ISL 01.\nii. Stairs-2: Walk straight ahead. It is the first room on your right.\niii. LIFT: Turn right, then turn right and walk down past ISL 01.", tags: ["lab", "computer"] },
+      { id: "csl-01", name: "CSL 01", x: 360, y: 600, w: 90, h: 40, type: "lab", description: "Computer Science Lab 01", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl01.jpeg", directions: "i. Stairs-1: Turn right and walk all the way straight down to the end.\nii. Stairs-2: Turn right, and it is immediately there on your right.\niii. LIFT: Turn right, then turn right and walk all the way down to the end.", tags: ["lab", "computer"] },
+
+      // RIGHT OPEN CORRIDOR
+      { id: "corridor-4", name: "", x: 455, y: 255, w: 165, h: 180, type: "corridor", clickable: false, description: "Open corridor zone.", image: "", directions: "TBD", tags: [] },
+
+      // TOP SECTION
+      { id: "staff-room-top-center", name: "STAFF ROOM", x: 175, y: 30, w: 140, h: 40, type: "staffroom", description: "Main staff room", department: "CSE", capacity: 15, image: "/apj-block-images/4th-floor/sr2.jpeg", directions: "i. Stairs-1: Walk forward and turn left, go all the way to the top wall, then turn left again.\nii. Stairs-2: Walk straight ahead through the entire building to the top wall, then turn left.\niii. LIFT: Turn right, walk all the way to the top, then turn left.", tags: ["office", "staff"],
+        faculties: [
+          { name: "Dr. VENKATRAMANA BHAT P", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.32 PM.jpeg" },
+          { name: "Dr. SHABARI SHEDTHI B", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (1).jpeg" },
+          { name: "Dr. PRADEEP KANCHAN", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (2).jpeg" },
+          { name: "Dr. JYOTHI SHETTY", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM.jpeg" },
+          { name: "Dr. DESAI KARANAM SREEKANTHA", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (1).jpeg" },
+          { name: "Dr. SANNIDHAN M S", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (2).jpeg" },
+          { name: "Dr. PALLAVI K N", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM.jpeg" }
+        ]
+      },
+      { id: "csl-07", name: "CSL 07", x: 360, y: 30, w: 90, h: 40, type: "lab", description: "Computer Science Lab 07", department: "CSE", capacity: 40, image: "/apj-block-images/4th-floor/csl07.jpeg", directions: "i. Stairs-1: Turn left and walk straight ahead to the very end.\nii. Stairs-2: Walk straight ahead along the right side of the building all the way to the top.\niii. LIFT: Turn right, and walk straight all the way to the top.", tags: ["lab", "computer"] },
+
+      // MIDDLE STAFF ROOMS (Spaced nicely horizontally and vertically)
+      { id: "staff-room-mid-left", name: "STAFF ROOM", x: 145, y: 95, w: 90, h: 40, type: "staffroom", description: "Staff room left", department: "General", capacity: 8, image: "/apj-block-images/4th-floor/sr1.jpeg", directions: "i. Stairs-1: Turn right, cross to the left hallway, turn right to go up. It is on your right.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past the Washroom. It is on your right.\niii. LIFT: Turn left to the left hallway, turn right to go up. It is on your right.", tags: ["office", "staff"] },
+      { id: "staff-room-mid-right", name: "STAFF ROOM", x: 255, y: 95, w: 90, h: 40, type: "staffroom", description: "Staff room right", department: "General", capacity: 8, image: "/apj-block-images/4th-floor/sr2.jpeg", directions: "i. Stairs-1: Turn left and walk slightly up. It is on your left.\nii. Stairs-2: Walk straight ahead along the right hallway past the middle intersection. It is on your left.\niii. LIFT: Turn right to the right hallway, turn left to go up. It is on your left.", tags: ["office", "staff"] },
+
+      // CENTER SHARED UTILITIES
+      { id: "stairs-top-4", name: "STAIRS-1", x: 195, y: 255, w: 90, h: 40, type: "utility", description: "Main building staircase", department: "Facility", capacity: 0, image: "https://placehold.co/400x220?text=Stairs", directions: "Exit to your right into the hallway.", tags: ["stairs", "steps"] },
+      { id: "lift-4", name: "LIFT", x: 195, y: 315, w: 90, h: 40, type: "utility", description: "Building elevator", department: "Facility", capacity: 8, image: "https://placehold.co/400x220?text=Lift", directions: "Exit straight forward into the center intersection.", tags: ["lift", "elevator"] },
+
+      // LOWER CENTER
+      { id: "ups-room", name: "UPS ROOM", x: 145, y: 450, w: 90, h: 40, type: "utility", description: "Power backup room", department: "Facility", capacity: 0, image: "https://placehold.co/400x220?text=UPS", directions: "i. Stairs-1: Turn right, cross to the left hallway, turn left to walk down. It is on your left.\nii. Stairs-2: Turn left to the left hallway, turn right to walk up. It is on your right.\niii. LIFT: Turn left to the left hallway, turn left to walk down. It is on your left.", tags: ["power", "electrical"] },
+      { id: "server-room", name: "SERVER ROOM", x: 255, y: 520, w: 90, h: 40, type: "utility", description: "Main server infrastructure", department: "IT", capacity: 0, image: "https://placehold.co/400x220?text=Server+Room", directions: "i. Stairs-1: Turn right to walk down the hallway. It is on your right.\nii. Stairs-2: Walk straight ahead along the right hallway, and it is on your left.\niii. LIFT: Turn right to the right hallway, turn right to walk down. It is on your right.", tags: ["server", "network", "it"] },
+
+      // BOTTOM ROW
+      { id: "isl-04", name: "ISL 04", x: 35, y: 600, w: 90, h: 40, type: "lab", description: "Information Science Lab 04", department: "ISE", capacity: 40, image: "/apj-block-images/4th-floor/isl04.jpeg", directions: "i. Stairs-1: Turn right, cross to the left side, turn left and walk to the very end.\nii. Stairs-2: Turn left, and it is immediately there straight ahead on your left.\niii. LIFT: Turn left to the left side, turn left and walk to the very end.", tags: ["lab", "ise"] },
+      { id: "stairs-bottom-4", name: "STAIRS-2", x: 195, y: 600, w: 90, h: 40, type: "utility", description: "Secondary staircase", department: "Facility", capacity: 0, image: "https://placehold.co/400x220?text=Stairs", directions: "Exit straight forward into the bottom corridor.", tags: ["stairs", "steps"] }
+    ],
+    faculty: [
+      { name: "Dr. VENKATRAMANA BHAT P", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.32 PM.jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. SHABARI SHEDTHI B", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (1).jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. PRADEEP KANCHAN", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (2).jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. JYOTHI SHETTY", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM.jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. DESAI KARANAM SREEKANTHA", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (1).jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. SANNIDHAN M S", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (2).jpeg", roomId: "staff-room-top-center", department: "CSE" },
+      { name: "Dr. PALLAVI K N", image: "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM.jpeg", roomId: "staff-room-top-center", department: "CSE" }
+    ]
+};

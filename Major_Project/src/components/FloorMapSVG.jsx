@@ -102,8 +102,7 @@ const FloorMapSVG = memo(function FloorMapSVG({
         .filter(room => 
           room.type !== 'corridor' && (
             isEditMode || 
-            activeFilters.length === 0 || 
-            activeFilters.includes(room.type)
+            (!room.hideOnMap && (activeFilters.length === 0 || activeFilters.includes(room.type)))
           )
         )
         .map((room) => {

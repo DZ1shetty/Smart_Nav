@@ -74,9 +74,21 @@ export default function FloorPlan() {
   // Architect Mode Toggle
   const toggleEditMode = () => setIsEditMode(!isEditMode)
 
+  const [saveStatus, setSaveStatus] = useState('idle'); // 'idle', 'saving', 'saved'
+
   const onSave = () => {
-    handleSaveLayout()
-    setIsEditMode(false)
+    setSaveStatus('saving');
+    // Actual save to localStorage happens inside handleSaveLayout
+    handleSaveLayout();
+    
+    // Artificial delay for "Powerful" feedback
+    setTimeout(() => {
+      setSaveStatus('saved');
+      setTimeout(() => {
+        setSaveStatus('idle');
+        setIsEditMode(false);
+      }, 1500);
+    }, 800);
   }
 
   // Navigation State
@@ -305,11 +317,14 @@ export default function FloorPlan() {
         </div>
 
         {/* Integrated Search & Utility Dock */}
-        <div className="hidden md:flex items-center gap-6 flex-1 justify-end">
-          <div className="max-w-[280px] w-full">
+        <div className="hidden md:flex items-center justify-center flex-1 mx-8">
+          <div className="max-w-[500px] w-full relative group">
+            <div className="absolute -inset-4 bg-blue-500/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             <SearchSystem currentFloor={floorId} />
           </div>
+        </div>
 
+        <div className="hidden md:flex items-center gap-4 min-w-[300px] justify-end">
           <div className="flex items-center gap-3">
              <AnimatePresence>
                {isEditMode ? (
@@ -338,9 +353,21 @@ export default function FloorPlan() {
 
                    <button
                      onClick={onSave}
-                     className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all font-orbitron font-black text-[9px] uppercase tracking-widest"
+                     disabled={saveStatus !== 'idle'}
+                     className={`px-4 py-2 rounded-lg transition-all font-orbitron font-black text-[9px] uppercase tracking-widest flex items-center gap-2 ${
+                       saveStatus === 'saved' ? 'bg-emerald-500 text-white' : 'bg-blue-500 hover:bg-blue-600 text-white'
+                     }`}
                    >
-                     SAVE
+                     {saveStatus === 'saving' ? (
+                       <>
+                         <div className="w-2 h-2 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                         WRITING DATA...
+                       </>
+                     ) : saveStatus === 'saved' ? (
+                       'LOCKED & PERSISTED'
+                     ) : (
+                       'SAVE LAYOUT'
+                     )}
                    </button>
                    <button
                        onClick={() => setIsEditMode(false)}
@@ -392,7 +419,7 @@ export default function FloorPlan() {
                      </button>
                    </div>
                  )}
-              </AnimatePresence>
+               </AnimatePresence>
           </div>
         </div>
       </header>

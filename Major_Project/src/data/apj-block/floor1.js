@@ -14,6 +14,7 @@ export const floor1 = {
       department: "General",
       image: "https://placehold.co/400x300?text=Staff+Room",
       directions: "Located at the 1st floor.",
+      hideOnMap: true,
       tags: ["office", "staff"]
     }
   ],

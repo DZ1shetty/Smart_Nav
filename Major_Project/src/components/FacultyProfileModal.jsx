@@ -62,7 +62,7 @@ export default function FacultyProfileModal({ faculty, onClose }) {
                   <img 
                     src={faculty.image} 
                     alt={faculty.name} 
-                    className="w-full h-full object-cover object-[45%_10%] scale-[1.65] brightness-95" 
+                    className="w-full h-full object-contain brightness-95" 
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -92,17 +92,39 @@ export default function FacultyProfileModal({ faculty, onClose }) {
                 <Navigation className="w-3 h-3 text-blue-500" />
                 <span className="text-[9px] font-orbitron font-black uppercase tracking-widest text-black/40 dark:text-white/20">Location Details</span>
               </div>
-              <p className="text-[11px] font-orbitron font-bold text-black/60 dark:text-white/60 leading-relaxed uppercase tracking-wider">
-                {directions}
-              </p>
+              <div className="text-[13px] font-bold text-black dark:text-white leading-relaxed">
+                {(() => {
+                  if (!directions || directions === 'TBD') return 'Located in the department staff room.';
+                  
+                  // Split primarily by newlines
+                  let items = directions.split('\n').map(item => item.trim()).filter(item => item);
+                  
+                  // If still one block, try splitting by patterns but more carefully
+                  if (items.length === 1) {
+                    items = directions.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
+                      .map(item => item.trim())
+                      .filter(item => item);
+                  }
+                  
+                  if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(directions.trim())) {
+                    return (
+                      <ul className="space-y-2">
+                        {items.map((item, idx) => (
+                          <li key={idx} className="flex gap-2 items-start">
+                            <span className="flex-1 tracking-tight">
+                              {item.trim()}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  
+                  return directions;
+                })()}
+              </div>
             </div>
 
-            <button 
-              onClick={onClose}
-              className="w-full py-3 bg-black/[0.05] dark:bg-white/5 hover:bg-blue-500/10 hover:text-blue-500 border border-black/10 dark:border-white/10 rounded-xl transition-all text-[10px] font-orbitron font-black uppercase tracking-widest text-black/30 dark:text-white/20"
-            >
-              Close Record
-            </button>
           </div>
         </motion.div>
       </div>

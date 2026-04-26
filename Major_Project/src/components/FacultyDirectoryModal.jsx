@@ -126,7 +126,7 @@ export default function FacultyDirectoryModal({
                           <img 
                             src={item.image} 
                             alt={item.name}
-                            className="w-full h-full object-cover object-[45%_10%] scale-[1.65] brightness-[0.9] dark:brightness-[0.8] group-hover:brightness-105 group-hover:scale-[1.7] transition-all duration-500"
+                            className="w-full h-full object-contain brightness-[0.9] dark:brightness-[0.8] group-hover:brightness-105 transition-all duration-500"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
@@ -158,12 +158,6 @@ export default function FacultyDirectoryModal({
 
             {/* Footer */}
             <div className="p-4 px-8 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-              <button 
-                onClick={onClose}
-                className="px-6 py-2 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/[0.1] hover:text-blue-500 border border-black/10 dark:border-white/10 rounded-lg transition-all text-[10px] font-orbitron font-black uppercase tracking-[0.2em] text-black/30 dark:text-white/20"
-              >
-                Close View
-              </button>
               <div className="flex items-center gap-2">
                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500/40" />
                  <span className="text-[9px] font-orbitron font-black text-black/20 dark:text-white/10 uppercase tracking-widest">Database Active</span>

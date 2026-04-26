@@ -54,7 +54,7 @@ export default function RoomModal({ room, onClose }) {
                     src={images[currentImageIndex]} 
                     alt={room.name} 
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                   
                   {images.length > 1 && (
@@ -108,14 +108,6 @@ export default function RoomModal({ room, onClose }) {
               </div>
             </div>
 
-            <div className="mt-10 pt-6 border-t border-black/5 dark:border-white/5">
-              <button 
-                onClick={onClose}
-                className="w-full py-3 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/[0.1] hover:border-blue-500/50 border border-black/10 dark:border-white/10 rounded-xl transition-all text-[11px] font-orbitron font-black uppercase tracking-[0.3em] text-black/40 dark:text-white/30 hover:text-blue-500"
-              >
-                Close Module
-              </button>
-            </div>
           </div>
         </motion.div>
       </div>
@@ -124,14 +116,50 @@ export default function RoomModal({ room, onClose }) {
 }
 
 function InfoSection({ label, value }) {
+  const isDirections = label.toLowerCase() === 'directions';
+  
+  const renderValue = () => {
+    if (!value || value === 'TBD') return 'Not specified';
+    
+    if (isDirections) {
+      // Split primarily by newlines
+      let items = value.split('\n').map(item => item.trim()).filter(item => item);
+      
+      // If still one block, try splitting by patterns but more carefully
+      if (items.length === 1) {
+        items = value.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
+          .map(item => item.trim())
+          .filter(item => item);
+      }
+      
+      if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(value.trim())) {
+        return (
+          <ul className="space-y-3 mt-2">
+            {items.map((item, idx) => (
+              <li key={idx} className="flex gap-3 items-start">
+                <span className="flex-1 text-[15px] font-bold leading-snug text-black dark:text-white tracking-tight">
+                  {item.trim()}
+                </span>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+    }
+    
+    return (
+      <p className={`leading-relaxed text-black dark:text-white ${isDirections ? 'text-[15px] font-bold' : 'text-sm font-medium'}`}>
+        {value}
+      </p>
+    );
+  };
+
   return (
     <div className="space-y-2">
       <span className="text-[10px] font-orbitron font-black uppercase tracking-[0.2em] text-black/30 dark:text-white/20">
         {label}
       </span>
-      <p className="text-sm font-medium leading-relaxed text-black/70 dark:text-white/70">
-        {value || 'Not specified'}
-      </p>
+      {renderValue()}
     </div>
   )
 }

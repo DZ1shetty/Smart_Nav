@@ -1,114 +1,25 @@
 /**
- * INTENT-AWARE NAVIGATION SEARCH ENGINE (Core Engine v1.0)
+ * GOD-LEVEL NAVIGATION SEARCH ENGINE (Core Engine v3.0)
  * 
- * Follows the "Elite Navigation Search" specification for intent classification,
- * entity extraction, and multi-signal ranking.
+ * Hyper-optimized search with contiguous subsequence matching, 
+ * word-boundary detection, and multi-vector ranking.
  */
 
 import { floorsData } from './floorsData';
 
-/// --- SEARCH CONFIG & CONSTANTS ---
-const SCHEMA_VERSION = "1.0";
-const CONFIDENCE_THRESHOLD = 45;
+/// --- ENGINE CONFIG ---
+const SCHEMA_VERSION = "3.0";
+const CONFIDENCE_THRESHOLD = 25;
 
-const INTENT_PATTERNS = {
-  NAVIGATIONAL: /(room|lab|office|hall|lh|cr|floor|block|staff)/i,
-  INFORMATIONAL: /(how to|where is|what is|info|details|about)/i,
-  LOCAL: /(near|next to|opposite|beside|nearby)/i,
-};
-
-// --- CORE UTILITIES ---
-
-const superNormalize = (str) => str?.toString().toLowerCase().replace(/[^a-z0-9]/g, '') || "";
-const normalize = (str) => str?.toString().toLowerCase().trim() || "";
+// Internal Cache for the Search Pool
+let SEARCH_POOL_CACHE = null;
 
 /**
- * Stage 1: Intent Classification
+ * Pre-indexes all searchable items into a flat, efficient pool.
  */
-const classifyIntent = (query) => {
-  const q = normalize(query);
-  if (INTENT_PATTERNS.NAVIGATIONAL.test(q)) return "navigational";
-  if (INTENT_PATTERNS.LOCAL.test(q)) return "local";
-  if (INTENT_PATTERNS.INFORMATIONAL.test(q)) return "informational";
-  return q.split(/\s+/).length <= 2 ? "navigational" : "ambiguous";
-};
+const buildSearchPool = () => {
+  if (SEARCH_POOL_CACHE) return SEARCH_POOL_CACHE;
 
-/**
- * Stage 2: Entity Extraction
- */
-const extractEntities = (query) => {
-  const q = normalize(query);
-  const entities = [];
-  
-  const roomPattern = /([a-z]{1,4})?\s?\d{1,4}/i;
-  const roomMatch = q.match(roomPattern);
-  if (roomMatch) entities.push({ value: roomMatch[0], type: "place" });
-
-  const personMatch = q.match(/(?:dr|mr|ms|prof)\.?\s+([a-z\s]+)/i);
-  if (personMatch) entities.push({ value: personMatch[1].trim(), type: "person" });
-  
-  // If no prefix but looks like a name (capitalized or multi-word)
-  if (!personMatch && q.split(' ').length >= 2) {
-    entities.push({ value: q, type: "person" });
-  }
-
-  return entities;
-};
-
-/**
- * Stage 3: Ranking & Scoring System (100-pt Scale)
- */
-const calculateScore = (query, item, context = {}, entities = []) => {
-  const q = superNormalize(query);
-  const name = superNormalize(item.name);
-  const searchable = superNormalize(item.searchable || '');
-  
-  let scores = {
-    relevance: 0,      // 0-50
-    recency: 20,        
-    authority: 15,      
-    proximity: 0,       
-    personalization: 5
-  };
-
-  // 1. Direct Name Match
-  if (name === q) scores.relevance = 50;
-  else if (name.includes(q) || q.includes(name)) scores.relevance = 40;
-  
-  // 2. Entity Matching (High Signal)
-  entities.forEach(ent => {
-    const entVal = superNormalize(ent.value);
-    if (name === entVal || name.includes(entVal)) {
-      scores.relevance = Math.max(scores.relevance, 45);
-    }
-  });
-
-  // 3. Searchable Content Match
-  if (scores.relevance < 35 && searchable.includes(q)) {
-    scores.relevance = 35;
-  }
-
-  // PROXIMITY
-  if (context.currentFloor === item.floorKey) scores.proximity = 10;
-
-  // AUTHORITY
-  if (item.type === 'lab' || item.type === 'lecture_hall') scores.authority = 20;
-  if (item.type === 'faculty') scores.authority = 18;
-
-  const total = Math.min(100, Object.values(scores).reduce((a, b) => a + b, 0));
-  return { total, breakdown: scores };
-};
-
-/**
- * THE RESOLVER: Main entry point for search queries
- */
-export const resolveNavigationQuery = (query, context = {}) => {
-  if (!query || query.trim().length < 1) return null;
-
-  const intent = classifyIntent(query);
-  const entities = extractEntities(query);
-  
-  // 1. Create a Faculty-to-Room mapping for cross-referencing
   const facultyMap = {};
   Object.entries(floorsData).forEach(([floorKey, floorInfo]) => {
     floorInfo.faculty?.forEach(fac => {
@@ -117,25 +28,27 @@ export const resolveNavigationQuery = (query, context = {}) => {
     });
   });
 
-  // 2. Flatten all searchable items
   const pool = [];
   Object.entries(floorsData).forEach(([floorKey, floorInfo]) => {
     // Index Rooms
     floorInfo.rooms?.forEach(room => {
-      // Get linked faculty for this room
       const linkedFaculty = facultyMap[room.id] || [];
-      const facultyString = linkedFaculty.join(' ');
-      
       pool.push({
-        ...room,
+        id: room.id,
+        name: room.name,
+        type: room.type || 'room',
         floorKey,
         floorLabel: floorInfo.label,
         linkedFaculty: linkedFaculty,
-        searchable: `${room.name} ${room.faculty || ''} ${facultyString} ${room.type} ${room.department || ''} ${room.tags?.join(' ') || ''}`
+        faculty: room.faculty,
+        tags: room.tags || [],
+        department: room.department,
+        // Semantic searchable string
+        searchable: `${room.name} ${room.faculty || ''} ${linkedFaculty.join(' ')} ${room.type} ${room.department || ''} ${room.tags?.join(' ') || ''}`.toLowerCase()
       });
     });
 
-    // Index Faculty (Explicitly)
+    // Index Faculty (Explicit Entries)
     floorInfo.faculty?.forEach(fac => {
       const room = floorInfo.rooms?.find(r => r.id === fac.roomId);
       pool.push({
@@ -145,61 +58,122 @@ export const resolveNavigationQuery = (query, context = {}) => {
         floorKey,
         floorLabel: floorInfo.label,
         roomName: room?.name || 'Staff Area',
-        searchable: `${fac.name} ${fac.department || ''} ${fac.designation || ''} ${room?.name || ''}`
+        searchable: `${fac.name} ${fac.department || ''} ${fac.designation || ''} ${room?.name || ''}`.toLowerCase()
       });
     });
   });
 
-  // 3. Score and Sort
-  const rankedResults = pool
-    .map(item => {
-      const scoreData = calculateScore(query, item, context, entities);
-      
-      // Dynamic Description
-      let description = "";
-      if (item.type === 'faculty') {
-        description = `Faculty member located in ${item.roomName} (${item.floorLabel}).`;
-      } else {
-        const facultyInfo = item.linkedFaculty?.length > 0 
-          ? `Assigned to: ${item.linkedFaculty.join(', ')}.` 
-          : (item.faculty ? `Assigned to: ${item.faculty}.` : '');
-        description = `${item.type.toUpperCase()} on the ${item.floorLabel}. ${facultyInfo}`;
-      }
+  SEARCH_POOL_CACHE = pool;
+  return pool;
+};
 
-      return {
-        id: item.id,
-        title: item.name,
-        url: `/floor/${item.floorKey}?room=${item.id}${item.type === 'faculty' ? `&faculty=${encodeURIComponent(item.name)}` : ''}`,
-        description: description,
-        intent_type: intent === 'ambiguous' ? 'navigational' : intent,
-        confidence_score: scoreData.total,
-        ranking_breakdown: scoreData.breakdown,
-        source_freshness: "recent",
-        category_tags: [item.type, item.floorKey],
-        schema_version: SCHEMA_VERSION
-      };
-    })
-    .filter(r => r.confidence_score > 15)
-    .sort((a, b) => b.confidence_score - a.confidence_score);
-
-  // 4. ZERO-RESULT & FALLBACK PROTOCOL
-  if (rankedResults.length === 0 || rankedResults[0].confidence_score < CONFIDENCE_THRESHOLD) {
-    return {
-      title: "No direct match found",
-      url: null,
-      description: "We couldn't find an exact match. Try checking the faculty directory or searching for a room number.",
-      intent_type: "informational",
-      confidence_score: 0,
-      ranking_breakdown: { relevance: 0, recency: 0, authority: 0, proximity: 0, personalization: 0 },
-      source_freshness: "stale",
-      category_tags: ["fallback"],
-      alternatives: rankedResults.slice(0, 4),
-      schema_version: SCHEMA_VERSION
-    };
+/**
+ * 'God-Level' Fuzzy Scoring Algorithm
+ * Uses contiguous subsequence matching and word-boundary priority.
+ */
+const getGodLevelScore = (target, query) => {
+  const t = target.toLowerCase();
+  const q = query.toLowerCase();
+  
+  if (t === q) return 1000; // Absolute Perfect Match
+  if (t.startsWith(q)) return 800 + q.length * 10; // Strong Prefix
+  
+  // Word Boundary Priority (e.g., 'btl' matching 'BTL 05')
+  const words = t.split(/[\s\-_]+/);
+  for (const word of words) {
+    if (word.startsWith(q)) return 700 + q.length * 5;
   }
 
-  const finalResult = { ...rankedResults[0] };
-  finalResult.alternatives = rankedResults.slice(1, 5);
+  // Contiguous Subsequence Matching
+  let score = 0;
+  let qIdx = 0;
+  let lastTIdx = -1;
+  let contiguousCount = 0;
   
-  return finalResult;
+  for (let i = 0; i < t.length && qIdx < q.length; i++) {
+    if (t[i] === q[qIdx]) {
+      // Check if this match is contiguous with the last one
+      if (lastTIdx === i - 1) {
+        contiguousCount++;
+      } else {
+        contiguousCount = 0;
+      }
+      
+      score += (10 + contiguousCount * 20);
+      lastTIdx = i;
+      qIdx++;
+    }
+  }
+
+  // Full Subsequence Found
+  if (qIdx === q.length) {
+    const coverage = q.length / t.length;
+    const finalScore = (score * 0.4) + (coverage * 150);
+    return Math.min(600, finalScore);
+  }
+
+  return 0;
+};
+
+/**
+ * Main Resolver
+ */
+export const resolveNavigationQuery = (query, context = {}) => {
+  if (!query || query.trim().length < 1) return null;
+
+  const normalizedQuery = query.toLowerCase().trim();
+  const pool = buildSearchPool();
+  
+  const results = pool.map(item => {
+    // 1. Calculate Primary Score (Direct Name Match)
+    const primaryScore = getGodLevelScore(item.name, normalizedQuery);
+    
+    // 2. Keyword/Semantic Score
+    let semanticScore = 0;
+    const keywords = item.searchable.split(' ');
+    for (const word of keywords) {
+      const s = getGodLevelScore(word, normalizedQuery);
+      if (s > semanticScore) semanticScore = s;
+    }
+
+    // 3. Signal Fusion
+    let totalScore = Math.max(primaryScore, semanticScore * 0.8);
+
+    // Dynamic Contextual Boosts
+    if (item.floorKey === context.currentFloor) totalScore *= 1.1; // 10% Floor Proximity Boost
+    if (item.name.toLowerCase().includes('btl')) totalScore += 50; // Priority for Labs
+    if (item.type === 'faculty') totalScore += 20; // Slight boost for personnel
+
+    // Map to 0-100 scale for UI
+    const finalConfidence = Math.min(100, (totalScore / 1000) * 100);
+
+    // 4. Intelligence-Driven Formatting
+    let description = "";
+    if (item.type === 'faculty') {
+      description = `Faculty member in ${item.roomName} (${item.floorLabel}).`;
+    } else {
+      const staff = item.linkedFaculty?.length > 0 
+        ? item.linkedFaculty[0] 
+        : (item.faculty || null);
+      description = `${item.type.replace('_', ' ')} on ${item.floorLabel}${staff ? ` • Managed by ${staff}` : ''}`;
+    }
+
+    return {
+      id: item.id,
+      title: item.name,
+      url: `/floor/${item.floorKey}?room=${item.id}${item.type === 'faculty' ? `&faculty=${encodeURIComponent(item.name)}` : ''}`,
+      description,
+      confidence_score: Math.round(finalConfidence),
+      category_tags: [item.type, item.floorKey]
+    };
+  })
+  .filter(r => r.confidence_score >= CONFIDENCE_THRESHOLD)
+  .sort((a, b) => b.confidence_score - a.confidence_score);
+
+  if (results.length === 0) return null;
+
+  const topResult = results[0];
+  topResult.alternatives = results.slice(1, 8);
+  
+  return topResult;
 };

@@ -10,7 +10,20 @@
     --blueprint-line: #e2e8f0;
     --room-bg: #ffffff;
     --room-corridor: rgba(15, 23, 42, 0.05);
-    --boundary-stroke: rgba(15, 23, 42, 0.25);
+    --boundary-stroke: rgba(15, 23, 42, 0.45);
+
+    /* BOX LABEL TEXT */
+    --BOX_FONT_SIZE: 14px;
+    --box-font-weight: 900;
+    --box-line-height: 1.1;
+
+    /* COORDINATES TEXT */
+    --coord-font-size: 10px;
+    --coord-font-weight: 400;
+
+    /* FONT FAMILY */
+    --font-main: 'Orbitron', 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
   
   .dark {
@@ -20,7 +33,7 @@
     --blueprint-line: #1a1a1a;
     --room-bg: #121212;
     --room-corridor: rgba(255, 255, 255, 0.03);
-    --boundary-stroke: rgba(255, 255, 255, 0.15);
+    --boundary-stroke: rgba(255, 255, 255, 0.35);
   }
 }
 
@@ -31,6 +44,16 @@ body {
   margin: 0;
   overflow-x: hidden;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.layout-container {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
 }
 
 .blueprint-grid {
@@ -94,4 +117,100 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #888;
+}
+
+.box-label {
+  font-family: var(--font-main) !important;
+  font-size: var(--BOX_FONT_SIZE) !important;
+  font-weight: var(--box-font-weight) !important;
+  line-height: var(--box-line-height) !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.05em !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 4px !important;
+  height: 100% !important;
+
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  -webkit-text-stroke: 0.8px currentColor !important;
+  paint-order: stroke fill !important;
+}
+
+/* GROUND, FIRST & SECOND FLOOR EXCEPTION (Scale Correction)
+   These floors have viewBox of 1280 (2x larger than 4th floor's 640).
+   To physically look like 14px on the screen, we must double the SVG units to 28px.
+*/
+.floor-ground .box-label,
+.floor-first .box-label,
+.floor-second .box-label {
+  font-size: 32px !important;
+}
+
+/* THIRD FLOOR EXCEPTION (Scale Correction)
+   Third floor viewBox is 1100 (1.7x larger than 4th floor's 640).
+   To physically look like 14px on the screen, we scale SVG units to 24px.
+*/
+.floor-third .box-label {
+  font-size: 28px !important;
+}
+
+/* FOURTH & FIFTH FLOOR (Native Scale)
+   These floors use the baseline 640 viewBox, so 14px renders naturally.
+   Explicitly defining to ensure absolute parity.
+*/
+.floor-fourth .box-label {
+  font-size: 14px !important;
+}
+
+.floor-fifth .box-label {
+  font-size: 18px !important;
+}
+
+.coord-label {
+  font-family: var(--font-mono);
+  font-size: var(--coord-font-size);
+  font-weight: 700;
+
+  color: #00eaff;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 234, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  position: absolute;
+  top: -20px;
+  left: 0;
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* COORDINATE LABEL SCALING (Physical 10px target) */
+.floor-ground .coord-label,
+.floor-first .coord-label,
+.floor-second .coord-label {
+  font-size: 20px !important;
+  top: -40px !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  border-width: 2px !important;
+}
+
+.floor-third .coord-label {
+  font-size: 17px !important;
+  top: -34px !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  border-width: 1.5px !important;
 }

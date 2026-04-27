@@ -5,12 +5,13 @@ import { LayoutGrid, Users, FlaskConical, GraduationCap, Map, ArrowUpRight, Buil
 import SearchSystem from './SearchSystem'
 
 const floors = [
-  { id: 'basement', label: 'BASEMENT' },
-  { id: 'floor1', label: 'FLOOR-1' },
-  { id: 'floor2', label: 'FLOOR-2' },
-  { id: 'floor3', label: 'FLOOR-3' },
-  { id: 'floor4', label: 'FLOOR-4' },
-  { id: 'floor5', label: 'FLOOR-5' },
+  { id: 'basement', label: 'BASEMENT FLOOR' },
+  { id: 'ground', label: 'GROUND FLOOR' },
+  { id: 'first', label: 'FIRST FLOOR' },
+  { id: 'second', label: 'SECOND FLOOR' },
+  { id: 'third', label: 'THIRD FLOOR' },
+  { id: 'fourth', label: 'FOURTH FLOOR' },
+  { id: 'fifth', label: 'FIFTH FLOOR' },
 ]
 
 export default function HomePage() {

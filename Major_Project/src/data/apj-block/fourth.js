@@ -1,6 +1,6 @@
-export const floor4 = {
+export const fourth = {
     buildingName: "APJ-BLOCK",
-    label: "4th Floor",
+    label: "Fourth Floor",
     viewWidth: 640,
     viewHeight: 663,
     mainWidth: 455,

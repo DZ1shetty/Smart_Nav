@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 
 const TYPE_COLORS = {
   classroom: '#3b82f6', // blue
@@ -7,250 +6,223 @@ const TYPE_COLORS = {
   staffroom: '#facc15', // yellow
   hod: '#f97316',       // orange
   utility: '#9ca3af',   // gray
+  hall: '#ef4444',      // red
   corridor: 'transparent'
 }
 
-const RoomBox = ({ room, onClick, isSelected, isEditMode, onMove }) => {
+// --- STATIC BOX (VIEW MODE) ---
+const StaticRoom = ({ room, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false)
   const isCorridor = room.type === 'corridor'
   const color = TYPE_COLORS[room.type] || '#ffffff'
-  const c = 6 // chamfer size
+  const c = 6
+  const w = room.width ?? room.w ?? 0;
+  const h = room.height ?? room.h ?? 0;
 
-  // Path for chamfered rectangle
+  // Clickability Logic: Filter out stairs, lifts, and washrooms
+  const isUtilityExcluded = 
+    room.name?.toLowerCase().includes('stairs') || 
+    room.name?.toLowerCase().includes('lift') || 
+    room.name?.toLowerCase().includes('washroom') ||
+    room.id?.toLowerCase().includes('stairs') ||
+    room.id?.toLowerCase().includes('lift') ||
+    room.id?.toLowerCase().includes('washroom');
+
+  const isClickable = !isCorridor && !isUtilityExcluded && room.clickable !== false;
+  
   const roomPath = `
     M ${room.x + c} ${room.y}
-    H ${room.x + room.w - c} 
-    L ${room.x + room.w} ${room.y + c}
-    V ${room.y + room.h - c}
-    L ${room.x + room.w - c} ${room.y + room.h}
+    H ${room.x + w - c} 
+    L ${room.x + w} ${room.y + c}
+    V ${room.y + h - c}
+    L ${room.x + w - c} ${room.y + h}
     H ${room.x + c}
-    L ${room.x} ${room.y + room.h - c}
+    L ${room.x} ${room.y + h - c}
     V ${room.y + c}
     Z
   `
 
   return (
-    <motion.g
-      onClick={!isEditMode ? onClick : undefined}
-      drag={isEditMode && !isCorridor}
-      dragMomentum={false}
-      dragElastic={0}
-      onDragEnd={(e, info) => {
-        if (isEditMode && onMove) {
-          const newX = Math.round((room.x + info.offset.x) / 5) * 5
-          const newY = Math.round((room.y + info.offset.y) / 5) * 5
-          onMove(room.id, newX, newY)
-        }
-      }}
-      className={(room.clickable !== false || isEditMode) ? 'cursor-pointer' : ''}
-      animate={{
-        ...(isSelected ? {
-          filter: [
-            `drop-shadow(0 0 8px ${color}66)`,
-            `drop-shadow(0 0 15px ${color}aa)`,
-            `drop-shadow(0 0 8px ${color}66)`
-          ],
-          scale: 1.07,
-          opacity: 1
-        } : {
-          filter: 'drop-shadow(0 0 0px transparent)',
-          scale: 1,
-          x: 0,
-          y: 0,
-          opacity: 1
-        }),
-        pointerEvents: 'auto'
-      }}
-      whileHover={(room.clickable !== false || isEditMode) && !isSelected ? { 
-        filter: `drop-shadow(0 0 12px ${color}88)`,
-        scale: 1.05
-      } : {}}
-      transition={isSelected ? { 
-        filter: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-        scale: { type: "spring", stiffness: 300, damping: 25 }
-      } : { type: "spring", stiffness: 400, damping: 25 }}
-      role={(room.clickable !== false || isEditMode) ? "button" : "presentation"}
-      aria-label={room.name || "Corridor"}
+    <g 
+      onClick={isClickable ? onClick : undefined}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ cursor: isClickable ? 'pointer' : 'default' }}
     >
-      {/* Edit Mode Glow */}
-      {isEditMode && !isCorridor && (
-        <rect
-          x={room.x - 4}
-          y={room.y - 4}
-          width={room.w + 8}
-          height={room.h + 8}
-          fill="none"
-          stroke={color}
-          strokeWidth="1"
-          strokeDasharray="4 4"
-          className="animate-pulse"
-        />
-      )}
-
-      {/* Glow Backing */}
-      {!isCorridor && (
-        <path
-          d={roomPath}
-          fill={color}
-          opacity="0.05"
-        />
-      )}
-
-      {/* Main Body */}
-      <motion.path
+      {!isCorridor && <path d={roomPath} fill={color} opacity="0.1" />}
+      <path
         d={roomPath}
         fill={isCorridor ? 'var(--room-corridor)' : 'var(--room-bg)'}
-        stroke={isCorridor ? 'var(--blueprint-line)' : (isSelected || isEditMode ? color : 'var(--text-main)')}
-        strokeOpacity={isCorridor ? 0.5 : (isSelected || isEditMode ? 1 : 0.2)}
-        strokeWidth={isCorridor ? '1' : (isSelected || isEditMode ? '2' : '1.5')}
+        stroke={isCorridor ? 'var(--blueprint-line)' : color}
+        strokeOpacity={isCorridor ? 0.5 : 0.8}
+        strokeWidth={isCorridor ? '1' : '2'}
         strokeDasharray={isCorridor ? '4 4' : '0'}
-        animate={isSelected ? {
-          strokeOpacity: [0.4, 1, 0.4],
-          strokeWidth: [2, 3, 2]
-        } : {
-          strokeOpacity: isCorridor ? 0.5 : 0.2,
-          strokeWidth: 1.5
-        }}
-        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
       />
-      
       {!isCorridor && (
-        <>
-          {/* Holographic Scanline Effect */}
-          {isSelected && (
-            <motion.rect
-              x={room.x}
-              y={room.y}
-              width={room.w}
-              height="2"
-              fill={color}
-              opacity="0.3"
-              animate={{
-                opacity: [0, 0.5, 0]
-              }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              className="pointer-events-none"
-            />
-          )}
-
-          {/* Corner Accents - Unique Tech Decor */}
-          <motion.path
-            d={`M ${room.x} ${room.y + c + 8} V ${room.y + c} L ${room.x + c} ${room.y}`}
-            fill="none"
-            stroke={color}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            animate={isSelected ? { opacity: [0.5, 1, 0.5] } : { opacity: 1 }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          />
-          
-          <path
-            d={`M ${room.x + room.w - c - 4} ${room.y + room.h} H ${room.x + room.w - c} L ${room.x + room.w} ${room.y + room.h - c}`}
-            fill="none"
-            stroke={color}
-            strokeWidth="1.5"
-            opacity="0.5"
-          />
-
-          {/* Room Label - Multi-line wrapping with auto-scaling */}
-          {(() => {
-            const getLines = (text) => {
-              if (!text) return [''];
-              const words = text.split(' ');
-              const lines = [];
-              let currentLine = words[0];
-              
-              // Split if name is multi-word and doesn't fit a very wide profile
-              const threshold = Math.max(7, Math.floor((room.w - 12) / 14));
-              
-              for (let i = 1; i < words.length; i++) {
-                if ((currentLine + ' ' + words[i]).length <= threshold) {
-                  currentLine += ' ' + words[i];
-                } else {
-                  lines.push(currentLine);
-                  currentLine = words[i];
-                }
-              }
-              lines.push(currentLine);
-              return lines;
-            };
-
-            const lines = getLines(room.name);
-            const maxLineLength = Math.max(...lines.map(l => l.length), 1);
-            const padding = 10;
-            const lineHeight = 1.1; 
-            
-            // Orbitron is wide; 0.75 is a very safe factor to guarantee fit
-            const fontSizeW = (room.w - padding) / (maxLineLength * 0.75);
-            const fontSizeH = (room.h - padding) / (lines.length * lineHeight);
-            
-            // Allow text to grow much larger to fill the box
-            const maxCap = 32; 
-            const finalFontSize = Math.max(Math.min(fontSizeW, fontSizeH, maxCap), 7);
-
-            return (
-              <motion.text
-                fontWeight="black"
-                fill="var(--text-main)"
-                textAnchor="middle"
-                dominantBaseline="central"
-                className="font-orbitron font-black pointer-events-none select-none uppercase transition-colors duration-300"
-                animate={isSelected ? {
-                  fill: ['var(--text-main)', color, 'var(--text-main)']
-                } : {
-                  fill: 'var(--text-main)'
-                }}
-                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                style={{ 
-                  textShadow: isSelected ? `0 0 10px ${color}44` : 'none',
-                  letterSpacing: '-0.05em',
-                  fontSize: `${finalFontSize}px`
-                }}
-              >
-                {lines.map((line, i) => {
-                  const startY = room.y + room.h / 2 - ((lines.length - 1) * (finalFontSize * lineHeight)) / 2;
-                  return (
-                    <tspan
-                      key={i}
-                      x={room.x + room.w / 2}
-                      y={startY + i * (finalFontSize * lineHeight)}
-                      dominantBaseline="central"
-                    >
-                      {line}
-                    </tspan>
-                  );
-                })}
-              </motion.text>
-            );
-          })()}
-
-          {/* Coordinate Tooltip in Edit Mode */}
-          {isEditMode && (
-             <text
-             x={room.x}
-             y={room.y - 10}
-             fontSize="10"
-             fill={color}
-             fontWeight="bold"
-             className="font-mono pointer-events-none"
-           >
-             {room.x}, {room.y}
-           </text>
-          )}
-
-          {/* Small Tech Detail - Type Indicator */}
-          <circle 
-            cx={room.x + room.w - 10} 
-            cy={room.y + 10} 
-            r="1.5" 
-            fill={color} 
-            className="animate-pulse"
-          />
-        </>
+        <RoomLabel room={room} w={w} h={h} color={color} showCoords={isHovered} />
       )}
-    </motion.g>
+    </g>
   )
 }
 
-export default memo(RoomBox)
+// --- DRAGGABLE BOX (EDIT MODE ONLY) ---
+const DraggableRoom = ({ room, onMove, onResize }) => {
+  const isCorridor = room.type === 'corridor'
+  const color = TYPE_COLORS[room.type] || '#ffffff'
+  const c = 6
+  const w = room.width ?? room.w ?? 0;
+  const h = room.height ?? room.h ?? 0;
+  
+  // Custom Pointer Events for 1:1 Pixel Accuracy (NO CSS TRANSFORMS)
+  const handlePointerDown = (e) => {
+    if (isCorridor) return;
+    e.stopPropagation();
+    e.target.setPointerCapture(e.pointerId);
 
+    const svg = e.target.ownerSVGElement;
+    const startPt = svg.createSVGPoint();
+    startPt.x = e.clientX;
+    startPt.y = e.clientY;
+    const startSVG = startPt.matrixTransform(svg.getScreenCTM().inverse());
+    
+    const startRoomX = room.x;
+    const startRoomY = room.y;
 
+    const onPointerMove = (moveEvent) => {
+      const movePt = svg.createSVGPoint();
+      movePt.x = moveEvent.clientX;
+      movePt.y = moveEvent.clientY;
+      const moveSVG = movePt.matrixTransform(svg.getScreenCTM().inverse());
+      
+      const dx = moveSVG.x - startSVG.x;
+      const dy = moveSVG.y - startSVG.y;
+      
+      // Update state live (exact coordinates)
+      onMove(room.id, Math.round(startRoomX + dx), Math.round(startRoomY + dy));
+    };
+
+    const onPointerUp = (upEvent) => {
+      e.target.releasePointerCapture(upEvent.pointerId);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  };
+
+  const handleResizePointerDown = (e) => {
+    e.stopPropagation();
+    e.target.setPointerCapture(e.pointerId);
+
+    const svg = e.target.ownerSVGElement;
+    const startPt = svg.createSVGPoint();
+    startPt.x = e.clientX;
+    startPt.y = e.clientY;
+    const startSVG = startPt.matrixTransform(svg.getScreenCTM().inverse());
+    
+    const startRoomW = w;
+    const startRoomH = h;
+
+    const onPointerMove = (moveEvent) => {
+      const movePt = svg.createSVGPoint();
+      movePt.x = moveEvent.clientX;
+      movePt.y = moveEvent.clientY;
+      const moveSVG = movePt.matrixTransform(svg.getScreenCTM().inverse());
+      
+      const dx = moveSVG.x - startSVG.x;
+      const dy = moveSVG.y - startSVG.y;
+      
+      onResize(room.id, Math.max(20, Math.round(startRoomW + dx)), Math.max(20, Math.round(startRoomH + dy)));
+    };
+
+    const onPointerUp = (upEvent) => {
+      e.target.releasePointerCapture(upEvent.pointerId);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  };
+
+  const roomPath = `
+    M ${room.x + c} ${room.y}
+    H ${room.x + w - c} 
+    L ${room.x + w} ${room.y + c}
+    V ${room.y + h - c}
+    L ${room.x + w - c} ${room.y + h}
+    H ${room.x + c}
+    L ${room.x} ${room.y + h - c}
+    V ${room.y + c}
+    Z
+  `
+
+  return (
+    <g>
+      {/* Edit Mode Glow & Draggable Area */}
+      <rect
+        x={room.x - 4}
+        y={room.y - 4}
+        width={w + 8}
+        height={h + 8}
+        fill="transparent"
+        stroke={color}
+        strokeWidth="1"
+        strokeDasharray="4 4"
+        className="animate-pulse"
+        onPointerDown={handlePointerDown}
+        style={{ cursor: !isCorridor ? 'move' : 'default', touchAction: 'none' }}
+      />
+
+      <path 
+        d={roomPath} 
+        fill="var(--room-bg)" 
+        stroke={color} 
+        strokeWidth="2"
+        onPointerDown={handlePointerDown}
+        style={{ pointerEvents: 'none' }} 
+      />
+      <RoomLabel room={room} w={w} h={h} color={color} showCoords={true} />
+
+      {/* Resize Handle */}
+      <rect
+        x={room.x + w - 12}
+        y={room.y + h - 12}
+        width="12"
+        height="12"
+        fill={color}
+        className="cursor-nwse-resize"
+        onPointerDown={handleResizePointerDown}
+        style={{ touchAction: 'none' }}
+      />
+    </g>
+  )
+}
+
+const RoomLabel = ({ room, w, h, color, showCoords }) => {
+  return (
+    <foreignObject x={room.x} y={room.y} width={w} height={h} style={{ pointerEvents: 'none', overflow: 'visible' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {showCoords && (
+          <div className="coord-label">
+            ({Math.round(room.x)}, {Math.round(room.y)})
+          </div>
+        )}
+        <div className="box-label" style={{ color: color }}>
+          {room.name || room.label}
+        </div>
+      </div>
+    </foreignObject>
+  );
+}
+
+const RoomBox = ({ room, isEditMode, onMove, onResize, onClick }) => {
+  return isEditMode ? (
+    <DraggableRoom room={room} onMove={onMove} onResize={onResize} />
+  ) : (
+    <StaticRoom room={room} onClick={onClick} />
+  );
+};
+
+export default memo(RoomBox);

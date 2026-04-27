@@ -1,6 +1,6 @@
-export const floor3 = {
+export const third = {
     buildingName: "APJ-BLOCK",
-    label: "3rd Floor",
+    label: "Third Floor",
     viewWidth: 1100,
     viewHeight: 1450,
     mainWidth: 850,
@@ -30,8 +30,8 @@ export const floor3 = {
       { id: "lh-308", name: "LH-308", x: 570, y: 720, w: 220, h: 90, type: "classroom", description: "Classroom LH-308", capacity: 60, image: "/apj-block-images/3th-floor/LH-308.jpeg", directions: "TBD", tags: ["class", "lecture", "cr", "lh", "308"] },
 
       // ROW 6 & 7: E&C SECTION & LOWER PAIR
-      { id: "ec-staff-room-1", name: "E&C STAFF ROOM", x: 320, y: 40, w: 240, h: 120, type: "staffroom", description: "Main ECE Staff Office", department: "ECE", capacity: 15, image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.44.13 PM.jpeg", directions: "Located at the top center of the 3rd floor, directly across from the main stairs.", tags: ["office", "staff", "ece"] },
-      { id: "ec-staff-room-2", name: "E&C STAFF ROOM", x: 70, y: 960, w: 240, h: 120, type: "staffroom", description: "E&C Department Staff Room", image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.28 PM.jpeg", directions: "Located at the bottom section, left side.", tags: ["office", "ec"] },
+      { id: "ec-staff-room-1", name: "STAFF ROOM", x: 320, y: 40, w: 240, h: 120, type: "staffroom", description: "Main ECE Staff Office", department: "ECE", capacity: 15, image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.44.13 PM.jpeg", directions: "Located at the top center of the 3rd floor, directly across from the main stairs.", tags: ["office", "staff", "ece"] },
+      { id: "ec-staff-room-2", name: "STAFF ROOM", x: 70, y: 960, w: 240, h: 120, type: "staffroom", description: "E&C Department Staff Room", image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.28 PM.jpeg", directions: "Located at the bottom section, left side.", tags: ["office", "ec"] },
       
       { id: "staff-room-bot-1", name: "STAFF ROOM", x: 330, y: 920, w: 100, h: 150, type: "staffroom", description: "Department staff room", image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (1).jpeg", directions: "Located in the lower section, near the center.", tags: ["office"] },
       { id: "staff-room-bot-2", name: "STAFF ROOM", x: 450, y: 920, w: 100, h: 150, type: "staffroom", description: "Department staff room", image: "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (2).jpeg", directions: "Located in the lower section, near the center.", tags: ["office"] },

@@ -7,17 +7,19 @@
  */
 
 import { basement } from './apj-block/basement.js';
-import { floor1 } from './apj-block/floor1.js';
-import { floor2 } from './apj-block/floor2.js';
-import { floor3 } from './apj-block/floor3.js';
-import { floor4 } from './apj-block/floor4.js';
-import { floor5 } from './apj-block/floor5.js';
+import { ground } from './apj-block/ground.js';
+import { first } from './apj-block/first.js';
+import { second } from './apj-block/second.js';
+import { third } from './apj-block/third.js';
+import { fourth } from './apj-block/fourth.js';
+import { fifth } from './apj-block/fifth.js';
 
 export const floorsData = {
   basement,
-  floor1,
-  floor2,
-  floor3,
-  floor4,
-  floor5,
+  ground,
+  first,
+  second,
+  third,
+  fourth,
+  fifth,
 };

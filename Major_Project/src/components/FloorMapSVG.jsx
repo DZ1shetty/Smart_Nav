@@ -14,6 +14,7 @@ const FloorMapSVG = memo(function FloorMapSVG({
   activeFilters,
   activeSearchIds,
   onRoomMove,
+  onRoomResize,
   onRoomClick,
   onBoundaryChange
 }) {
@@ -26,39 +27,62 @@ const FloorMapSVG = memo(function FloorMapSVG({
   const midY = h / 2;
   const rounded = 40;
 
+  // Calculate centering offsets accurately
+  const minX = 5;
+  const maxX = mainW + bW;
+  const buildingCenter = (minX + maxX) / 2;
+  const viewCenter = w / 2;
+  const dx = viewCenter - buildingCenter;
+  const dy = 0;
+
   // Outer border path calculation
   const borderPath = `
-    M ${rounded + 20},30 
-    L ${mainW - rounded},30 
-    Q ${mainW},30 ${mainW},${rounded + 30} 
+    M ${rounded + 5},10 
+    L ${mainW - rounded},10 
+    Q ${mainW},10 ${mainW},${rounded + 10} 
     L ${mainW},${midY - bH/2} 
     L ${mainW + bW},${midY - bH/2} 
     L ${mainW + bW},${midY + bH/2} 
     L ${mainW},${midY + bH/2} 
     L ${mainW},${h - rounded} 
     Q ${mainW},${h} ${mainW - rounded},${h} 
-    L ${rounded + 20},${h} 
-    Q 20,${h} 20,${h - rounded} 
-    L 20,${rounded + 30} 
-    Q 20,30 ${rounded + 20},30 
+    L ${rounded + 5},${h} 
+    Q 5,${h} 5,${h - rounded} 
+    L 5,${rounded + 10} 
+    Q 5,10 ${rounded + 5},10 
     Z
   `;
 
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className="w-full h-full p-8"
+      className="w-full h-full p-2"
       xmlns="http://www.w3.org/2000/svg"
       shapeRendering="geometricPrecision"
       textRendering="geometricPrecision"
     >
-      {/* Floor Border */}
+      {/* Background Image Layer (Uploaded Reference) */}
+      {floorData?.mapImage && (
+        <image 
+          href={floorData.mapImage}
+          x="0"
+          y="0"
+          width={w}
+          height={h}
+          preserveAspectRatio="xMidYMid slice"
+          opacity={isEditMode ? 0.4 : 0.1}
+          style={{ pointerEvents: 'none' }}
+        />
+      )}
+
+      <g transform={`translate(${dx}, ${dy})`}>
+        {/* Floor Border */}
       <path
         d={borderPath}
         fill="none"
-        stroke={isEditMode ? "rgba(59, 130, 246, 0.5)" : "var(--boundary-stroke)"}
-        strokeWidth={isEditMode ? "3" : "2"}
-        strokeDasharray={isEditMode ? "10 5" : "8 4"}
+        stroke={isEditMode ? "rgba(59, 130, 246, 0.7)" : "var(--boundary-stroke)"}
+        strokeWidth={isEditMode ? "4" : "3"}
+        strokeDasharray={isEditMode ? "12 6" : "10 5"}
       />
 
       {/* Boundary Adjustment Handles (Edit Mode only) */}
@@ -113,10 +137,12 @@ const FloorMapSVG = memo(function FloorMapSVG({
               isSelected={selectedRoomId === room.id || highlightedRoomId === room.id}
               isEditMode={isEditMode}
               onMove={onRoomMove}
+              onResize={onRoomResize}
               onClick={() => onRoomClick(room)}
             />
           );
         })}
+      </g>
     </svg>
   );
 })

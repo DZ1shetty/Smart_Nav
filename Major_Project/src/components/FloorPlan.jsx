@@ -3,13 +3,11 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronDown, Plus, Minus, Maximize, Edit3, Save, Undo2, Redo2, XCircle, Users, RotateCcw } from 'lucide-react'
 import { floorsData } from '../data/floorsData'
-import { useFloorHistory } from '../hooks/useFloorHistory'
 import FloorMapSVG from './FloorMapSVG'
 import RoomModal from './RoomModal'
 import FacultyProfileModal from './FacultyProfileModal'
 import FacultyDirectoryModal from './FacultyDirectoryModal'
 import SearchSystem from './SearchSystem'
-
 export default function FloorPlan() {
   const { floorId } = useParams()
   const navigate = useNavigate()
@@ -17,84 +15,214 @@ export default function FloorPlan() {
 
   const [selectedRoom, setSelectedRoom] = useState(null)
   const [isFloorMenuOpen, setIsFloorMenuOpen] = useState(false)
-  const [isEditMode, setIsEditMode] = useState(false)
   const [isFacultyModalOpen, setIsFacultyModalOpen] = useState(false)
   const [selectedFacultyProfile, setSelectedFacultyProfile] = useState(null)
   const [highlightedRoomId, setHighlightedRoomId] = useState(null)
-
-  // Floor Data Initialization Helper
-  const getInitialData = useCallback(() => {
-    const baseData = floorsData[floorId] || floorsData.floor5
-    const CURRENT_VERSION = '1.0'
-    const saved = localStorage.getItem(`floor_data_${floorId}`)
-    
-    if (saved) {
-      try {
-        const payload = JSON.parse(saved)
-        // If it's a versioned save, use the data property. Otherwise (legacy), use it directly.
-        const savedData = payload.version === CURRENT_VERSION ? payload.data : null
-        
-        if (!savedData) return baseData
-
-        return {
-          ...baseData,
-          mainWidth: savedData.mainWidth || baseData.mainWidth,
-          bulgeWidth: savedData.bulgeWidth || baseData.bulgeWidth,
-          bulgeHeight: savedData.bulgeHeight || baseData.bulgeHeight,
-          viewWidth: savedData.viewWidth || baseData.viewWidth,
-          viewHeight: savedData.viewHeight || baseData.viewHeight,
-          rooms: baseData.rooms.map(baseRoom => {
-            const savedRoom = savedData.rooms?.find(r => r.id === baseRoom.id)
-            if (savedRoom) {
-              return { ...baseRoom, x: savedRoom.x, y: savedRoom.y }
-            }
-            return baseRoom
-          })
-        }
-      } catch (e) {
-        console.error("Failed to parse saved floor data", e)
-      }
-    }
-    return baseData
-  }, [floorId])
-
-  const {
-    localFloorData,
-    historyIndex,
-    historyLength,
-    handleUndo,
-    handleRedo,
-    handleSaveLayout,
-    handleRoomMove,
-    handleBoundaryChange
-  } = useFloorHistory(floorId, getInitialData)
-
-  const floorData = localFloorData
-
-  // Architect Mode Toggle
-  const toggleEditMode = () => setIsEditMode(!isEditMode)
-
   const [saveStatus, setSaveStatus] = useState('idle'); // 'idle', 'saving', 'saved'
 
-  const onSave = () => {
-    setSaveStatus('saving');
-    // Actual save to localStorage happens inside handleSaveLayout
-    handleSaveLayout();
+  const [rooms, setRooms] = useState([]);
+  const [faculty, setFaculty] = useState([]); // Dynamic faculty list
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  const [mapImage, setMapImage] = useState(null);
+
+  // ABSOLUTE SOURCE OF TRUTH: API -> Physical File
+  useEffect(() => {
+    async function loadLayout() {
+      try {
+        const res = await fetch(`/api/layout/${floorId}`);
+        const data = await res.json();
+
+          if (data.rooms && data.rooms.length > 0) {
+            setRooms(data.rooms);           // file is source of truth
+            setFaculty(data.faculty || []);  // persistent faculty
+            setIsLocked(data.locked !== false);
+            // Mirror to localStorage as offline backup
+            localStorage.setItem(`layout_floor_${floorId}`, JSON.stringify(data));
+            if (data.mapImage) setMapImage(data.mapImage);
+          } else {
+          // No file exists yet — try localStorage fallback
+          const local = localStorage.getItem(`layout_floor_${floorId}`);
+          if (local) {
+            const parsed = JSON.parse(local);
+            setRooms(Array.isArray(parsed) ? parsed : (parsed.rooms || []));
+            setFaculty(parsed.faculty || []);
+            if (parsed.mapImage) setMapImage(parsed.mapImage);
+            setIsLocked(false);
+          } else {
+            setRooms([]);
+            setFaculty([]);
+            setIsLocked(false);
+          }
+        }
+      } catch (err) {
+        console.error("API Load failed, using localStorage fallback", err);
+        const local = localStorage.getItem(`layout_floor_${floorId}`);
+        if (local) {
+          const parsed = JSON.parse(local);
+          const r = Array.isArray(parsed) ? parsed : (parsed.rooms || []);
+          setRooms(r);
+          setFaculty(parsed.faculty || []);
+          if (parsed.mapImage) setMapImage(parsed.mapImage);
+        }
+      }
+    }
+    loadLayout();
+  }, [floorId]);
+
+  // Merge loaded room positions with static data (for metadata like descriptions/images)
+  // This ensures we keep rich info but follow the pixel-lock rule
+  const roomsWithMetadata = useMemo(() => {
+    const staticFloor = floorsData[floorId] || {};
+    const staticRooms = staticFloor.rooms || [];
     
-    // Artificial delay for "Powerful" feedback
-    setTimeout(() => {
+    return rooms.map(savedRoom => {
+      const metadata = staticRooms.find(r => r.id === savedRoom.id) || {};
+      return { ...metadata, ...savedRoom };
+    });
+  }, [rooms, floorId]);
+
+  const onSave = async () => {
+    setSaveStatus('saving');
+    
+    // Round all coordinates before saving
+    const cleanRooms = rooms.map(room => ({
+      id: room.id,
+      label: room.name || room.label,
+      x: Math.round(room.x),
+      y: Math.round(room.y),
+      w: Math.round(room.w || room.width),
+      h: Math.round(room.h || room.height),
+      width: Math.round(room.w || room.width),
+      height: Math.round(room.h || room.height),
+      floor: floorId
+    }));
+
+    try {
+      // 1. save to file via API
+      const res = await fetch(`/api/layout/${floorId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rooms: cleanRooms, faculty: faculty, lastEditedBy: 'admin', mapImage })
+      });
+
+      if (!res.ok) {
+        throw new Error('Save failed');
+      }
+
+      // 2. Mirror to localStorage
+      localStorage.setItem(`layout_floor_${floorId}`, JSON.stringify({ rooms: cleanRooms, faculty, mapImage }));
+
+      // 3. UI Updates
       setSaveStatus('saved');
       setTimeout(() => {
         setSaveStatus('idle');
         setIsEditMode(false);
-      }, 1500);
-    }, 800);
+        setIsLocked(true);
+        setRooms(cleanRooms);
+        setFaculty(faculty);
+      }, 1000);
+    } catch (err) {
+      console.error(err);
+      alert('Save failed. Layout NOT locked. Try again.');
+      setSaveStatus('idle');
+    }
+  };
+
+  const handleEditUnlock = async () => {
+    try {
+      // unlock in file first
+      await fetch(`/api/layout/${floorId}/unlock`, { method: 'PATCH' });
+      setIsLocked(false);
+      setIsEditMode(true);
+    } catch (err) {
+      console.error("Unlock failed", err);
+      setIsEditMode(true);
+      setIsLocked(false);
+    }
   }
 
-  // Navigation State
-  const [zoom, setZoom] = useState(1)
+  const handleRoomMove = (roomId, newX, newY) => {
+    if (!isEditMode) return;
+    setRooms(prev => prev.map(r => r.id === roomId ? { ...r, x: newX, y: newY } : r));
+  };
+
+  const handleRoomResize = (roomId, newW, newH) => {
+    if (!isEditMode) return;
+    setRooms(prev => prev.map(r => r.id === roomId ? { ...r, w: newW, h: newH, width: newW, height: newH } : r));
+  };
+
+  const handleInitializeDefault = () => {
+    const staticFloor = floorsData[floorId];
+    if (staticFloor) {
+      if (staticFloor.rooms) setRooms(staticFloor.rooms);
+      if (staticFloor.faculty) setFaculty(staticFloor.faculty);
+    }
+  };
+
+  const handleRoomUpdate = (roomId, updates) => {
+    setRooms(prev => prev.map(r => r.id === roomId ? { ...r, ...updates } : r));
+  };
+
+  const handleDeleteFaculty = (facultyId) => {
+    if (!window.confirm("Are you sure you want to remove this faculty from the directory?")) return;
+    
+    // We only delete from the explicit 'faculty' array state. 
+    // If it's a 'list-' prefixed ID, it means it's in the gallery.
+    setFaculty(prev => prev.filter((f, idx) => {
+      const id = `list-${idx}-${f.name}`;
+      return id !== facultyId;
+    }));
+  };
+
+  const handleMapImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => setMapImage(event.target.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const floorData = {
+    ...(floorsData[floorId] || {}),
+    rooms: roomsWithMetadata,
+    faculty: faculty.length > 0 ? faculty : (floorsData[floorId]?.faculty || []),
+    mapImage
+  };
+  const [zoom, setZoom] = useState(0.9)
   const [pan, setPan] = useState({ x: 0, y: 0 })
+  const [mouseCoords, setMouseCoords] = useState({ x: 0, y: 0 })
   const constraintsRef = useRef(null)
+  const floorMenuRef = useRef(null)
+
+  // Close Floor Menu on click outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (floorMenuRef.current && !floorMenuRef.current.contains(event.target)) {
+        setIsFloorMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isEditMode) return;
+    const container = e.currentTarget.getBoundingClientRect();
+    const svg = e.currentTarget.querySelector('svg');
+    if (!svg) return;
+    
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+    
+    setMouseCoords({
+      x: Math.round(svgPt.x),
+      y: Math.round(svgPt.y)
+    });
+  }, [isEditMode]);
   
   // Aggregate all faculty sources (STRICTLY CURRENT FLOOR)
   const allFaculty = useMemo(() => {
@@ -103,6 +231,11 @@ export default function FloorPlan() {
     // 1. From rooms that have 'faculty' field
     const roomFaculty = (floorData.rooms || [])
       .filter(room => room.faculty && room.faculty !== 'N/A' && room.faculty !== '')
+      // Aggressive Deduplication: Remove room entries if they exist in the portrait gallery
+      .filter(room => {
+        const galleryEntries = floorData.faculty || [];
+        return !galleryEntries.some(f => f.roomId === room.id || f.name === room.faculty);
+      })
       .map(room => ({
         id: room.id,
         name: room.faculty,
@@ -128,7 +261,7 @@ export default function FloorPlan() {
     })
     
     return [...roomFaculty, ...listFaculty]
-  }, [floorData, floorId])
+  }, [floorData, floorId, faculty])
   
   // Global Faculty Lookup Helper (to fix search glitches across floors)
   const findFacultyGlobally = (name) => {
@@ -177,9 +310,10 @@ export default function FloorPlan() {
 
   // Close handlers that also clear URL params to allow re-searching same item
   const handleCloseRoom = () => {
-    setSelectedRoom(null)
-    setHighlightedRoomId(null)
-    setActiveSearchIds(null)
+    // We just navigate away; the useEffect will see the empty URL and close the modal
+    if (selectedRoom) {
+      setHighlightedRoomId(selectedRoom.id) // Keep highlight
+    }
     navigate(location.pathname, { replace: true })
   }
 
@@ -190,25 +324,30 @@ export default function FloorPlan() {
     navigate(location.pathname, { replace: true })
   }
 
-  // Handle auto-opening room from search
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
     const roomId = searchParams.get('room')
     const facultyName = searchParams.get('faculty')
 
-    if (roomId && floorData) {
+    if (roomId && floorData && floorData.rooms) {
       const room = floorData.rooms.find(r => r.id === roomId)
       if (room) {
-        setHighlightedRoomId(room.id)
-        // Only open RoomModal if NOT searching for a faculty member
-        if (!facultyName) {
-          setSelectedRoom(room)
+        // Only update if it's a different room to avoid re-render loops
+        if (selectedRoom?.id !== room.id) {
+          setHighlightedRoomId(room.id)
+          // Only open RoomModal if NOT searching for a faculty member
+          if (!facultyName) {
+            setSelectedRoom(room)
+          }
         }
         
         if (room.type && activeFilters.length > 0 && !activeFilters.includes(room.type)) {
           setActiveFilters(prev => [...prev, room.type])
         }
       }
+    } else if (!roomId && selectedRoom) {
+      // URL cleared, so close the modal
+      setSelectedRoom(null)
     }
 
     if (facultyName) {
@@ -220,28 +359,31 @@ export default function FloorPlan() {
         faculty = findFacultyGlobally(facultyName)
       }
 
-      if (faculty) {
+      if (faculty && selectedFacultyProfile?.name !== faculty.name) {
         setSelectedFacultyProfile(faculty)
       }
+    } else if (!facultyName && selectedFacultyProfile) {
+      setSelectedFacultyProfile(null)
     }
   }, [location.search, floorData, allFaculty, activeFilters])
 
   const handleZoom = (delta) => {
-    setZoom(prev => Math.min(Math.max(prev + delta, 1), 3))
+    setZoom(prev => Math.min(Math.max(prev + delta, 0.5), 3))
   }
 
   const resetView = () => {
-    setZoom(1)
+    setZoom(0.9)
     setPan({ x: 0, y: 0 })
   }
 
   const floors = [
-    { id: 'basement', label: 'Basement' },
-    { id: 'floor1', label: '1st Floor' },
-    { id: 'floor2', label: '2nd Floor' },
-    { id: 'floor3', label: '3rd Floor' },
-    { id: 'floor4', label: '4th Floor' },
-    { id: 'floor5', label: '5th Floor' },
+    { id: 'basement', label: 'Basement Floor' },
+    { id: 'ground', label: 'Ground Floor' },
+    { id: 'first', label: 'First Floor' },
+    { id: 'second', label: 'Second Floor' },
+    { id: 'third', label: 'Third Floor' },
+    { id: 'fourth', label: 'Fourth Floor' },
+    { id: 'fifth', label: 'Fifth Floor' },
   ]
 
   const [activeSearchIds, setActiveSearchIds] = useState(null)
@@ -261,7 +403,7 @@ export default function FloorPlan() {
       <header className="w-full z-40 bg-[var(--bg-main)]/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 py-3 px-6 md:px-12 flex items-center justify-between gap-8">
         <div className="flex items-center gap-6">
           <button
-            onClick={() => navigate('/')}
+            onMouseDown={() => navigate('/')}
             className="p-2.5 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/10 border border-black/10 dark:border-white/10 rounded-xl transition-all group"
           >
             <ArrowLeft className="w-4 h-4 text-black/40 dark:text-white/30 group-hover:text-blue-500 transition-colors" />
@@ -276,9 +418,9 @@ export default function FloorPlan() {
               <span className="text-blue-500">{floorData?.label}</span>
             </nav>
 
-            <div className="relative mt-1">
+            <div className="relative mt-1" ref={floorMenuRef}>
               <button
-                onClick={() => setIsFloorMenuOpen(!isFloorMenuOpen)}
+                onMouseDown={() => setIsFloorMenuOpen(!isFloorMenuOpen)}
                 className="flex items-center gap-2 text-xl font-orbitron font-black uppercase tracking-tighter hover:text-blue-500 transition-colors"
               >
                 <span>{floorData?.label}</span>
@@ -297,7 +439,8 @@ export default function FloorPlan() {
                       {floors.map((f) => (
                         <button
                           key={f.id}
-                          onClick={() => {
+                          onMouseDown={(e) => {
+                            e.preventDefault();
                             navigate(`/floor/${f.id}`)
                             setIsFloorMenuOpen(false)
                             resetView()
@@ -318,7 +461,7 @@ export default function FloorPlan() {
 
         {/* Integrated Search & Utility Dock */}
         <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-          <div className="max-w-[500px] w-full relative group">
+          <div className="max-w-[700px] w-full relative group">
             <div className="absolute -inset-4 bg-blue-500/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             <SearchSystem currentFloor={floorId} />
           </div>
@@ -334,22 +477,42 @@ export default function FloorPlan() {
                    exit={{ opacity: 0, scale: 0.95 }}
                    className="flex items-center gap-1 bg-blue-500/10 border border-blue-500/30 p-1 rounded-xl"
                  >
-                   <div className="flex items-center border-r border-black/10 dark:border-white/10 mr-1 pr-1">
+                    <div className="flex items-center border-r border-black/10 dark:border-white/10 mr-1 pr-1 gap-1">
+                      {rooms.length === 0 && (
+                        <button
+                          onClick={handleInitializeDefault}
+                          className="px-3 py-2 bg-blue-500/10 text-blue-500 rounded-lg transition-all font-orbitron font-black text-[8px] uppercase tracking-tighter animate-pulse"
+                        >
+                          PLACE DEFAULT ROOMS
+                        </button>
+                      )}
                       <button
-                        onClick={handleUndo}
-                        disabled={historyIndex === 0}
-                        className="p-2 hover:bg-blue-500/20 text-black/40 dark:text-white/30 hover:text-blue-500 disabled:opacity-20 rounded-lg transition-all"
+                        onClick={() => {
+                          if (window.confirm("Clear all rooms and start from scratch?")) {
+                            setRooms([]);
+                          }
+                        }}
+                        className="px-3 py-2 hover:bg-red-500/10 text-red-500/60 hover:text-red-500 rounded-lg transition-all font-orbitron font-black text-[8px] uppercase tracking-tighter"
                       >
-                        <Undo2 className="w-3.5 h-3.5" />
+                        CLEAR ALL
                       </button>
                       <button
-                        onClick={handleRedo}
-                        disabled={historyIndex === historyLength - 1}
-                        className="p-2 hover:bg-blue-500/20 text-black/40 dark:text-white/30 hover:text-blue-500 disabled:opacity-20 rounded-lg transition-all"
+                        onClick={() => {
+                          if (window.confirm("Reset to default file layout? This will lose all manual changes.")) {
+                            localStorage.removeItem(`layout_floor_${floorId}`);
+                            window.location.reload();
+                          }
+                        }}
+                        className="px-3 py-2 hover:bg-amber-500/10 text-amber-500/60 hover:text-amber-500 rounded-lg transition-all font-orbitron font-black text-[8px] uppercase tracking-tighter"
                       >
-                        <Redo2 className="w-3.5 h-3.5" />
+                        RESET DEFAULT
                       </button>
-                   </div>
+
+                      <label className="px-3 py-2 hover:bg-emerald-500/10 text-emerald-500/60 hover:text-emerald-500 rounded-lg transition-all font-orbitron font-black text-[8px] uppercase tracking-tighter cursor-pointer">
+                        UPLOAD REF IMAGE
+                        <input type="file" className="hidden" accept="image/*" onChange={handleMapImageUpload} />
+                      </label>
+                    </div>
 
                    <button
                      onClick={onSave}
@@ -369,17 +532,24 @@ export default function FloorPlan() {
                        'SAVE LAYOUT'
                      )}
                    </button>
-                   <button
-                       onClick={() => setIsEditMode(false)}
-                       className="p-2 hover:bg-black/5 dark:hover:bg-white/5 text-black/40 dark:text-white/30 hover:text-red-500 rounded-lg transition-all"
-                     >
-                       <XCircle className="w-3.5 h-3.5" />
-                     </button>
+                      <button
+                        onMouseDown={() => setIsFacultyModalOpen(true)}
+                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 text-blue-500 rounded-lg transition-all"
+                        title="Manage Faculty"
+                      >
+                        <Users className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setIsEditMode(false)}
+                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 text-black/40 dark:text-white/30 hover:text-red-500 rounded-lg transition-all"
+                      >
+                        <XCircle className="w-3.5 h-3.5" />
+                      </button>
                    </motion.div>
                  ) : (
                    <div className="flex items-center gap-3">
                      <button
-                       onClick={() => setIsFacultyModalOpen(true)}
+                       onMouseDown={() => setIsFacultyModalOpen(true)}
                        className="p-2.5 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/10 border border-black/10 dark:border-white/10 rounded-xl transition-all group flex items-center gap-2"
                      >
                        <Users className="w-4 h-4 text-blue-500" />
@@ -397,7 +567,7 @@ export default function FloorPlan() {
                        <div className="px-2 text-[9px] font-orbitron font-black text-blue-500 min-w-[40px] text-center">{Math.round(zoom * 100)}%</div>
                        <button
                          onClick={() => handleZoom(-0.25)}
-                         disabled={zoom <= 1}
+                         disabled={zoom <= 0.5}
                          className="p-2 hover:bg-blue-500/10 text-black/40 dark:text-white/30 hover:text-blue-500 rounded-lg transition-all disabled:opacity-10"
                        >
                          <Minus className="w-3.5 h-3.5" />
@@ -411,12 +581,13 @@ export default function FloorPlan() {
                        <Maximize className="w-3.5 h-3.5" />
                      </button>
                      
-                     <button
-                       onClick={() => setIsEditMode(true)}
-                       className="p-2.5 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/10 border border-black/10 dark:border-white/10 rounded-xl transition-all text-black/40 dark:text-white/30 hover:text-blue-500"
-                     >
-                       <Edit3 className="w-3.5 h-3.5" />
-                     </button>
+                      <button
+                        onClick={handleEditUnlock}
+                        className={`p-2.5 bg-black/[0.03] dark:bg-white/5 hover:bg-blue-500/10 border border-black/10 dark:border-white/10 rounded-xl transition-all ${isLocked ? 'text-black/40 dark:text-white/30' : 'text-blue-500'} hover:text-blue-500`}
+                        title={isLocked ? "Unlock Layout" : "Layout Unlocked"}
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
                    </div>
                  )}
                </AnimatePresence>
@@ -432,7 +603,7 @@ export default function FloorPlan() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={selectedRoom ? {
               scale: 0.8,
-              x: -280,
+              x: 0,
               y: 0,
               opacity: 1
             } : {
@@ -443,14 +614,12 @@ export default function FloorPlan() {
             }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ type: 'spring', damping: 25, stiffness: 120 }}
-            drag={!selectedRoom}
-            dragConstraints={constraintsRef}
-            dragElastic={0.1}
             style={{
               aspectRatio: floorData?.viewWidth && floorData?.viewHeight ? `${floorData.viewWidth}/${floorData.viewHeight}` : '640/663',
               willChange: 'transform, opacity'
             }}
-            className="relative w-full max-w-[1000px] max-h-[85vh] bg-white dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-[32px] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing"
+            className={`layout-container floor-${floorId} relative w-auto h-auto max-w-full max-h-full bg-white dark:bg-[#050505] border border-black/10 dark:border-white/10 rounded-[32px] overflow-hidden shadow-2xl transition-all duration-500`}
+            onMouseMove={handleMouseMove}
           >
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
             
@@ -462,6 +631,7 @@ export default function FloorPlan() {
               activeSearchIds={activeSearchIds}
               activeFilters={activeFilters}
               onRoomMove={handleRoomMove}
+              onRoomResize={handleRoomResize}
               onRoomClick={(room) => {
                 if (room.clickable === false) return;
                 if (room.type === 'staffroom') {
@@ -470,9 +640,27 @@ export default function FloorPlan() {
                   setSelectedRoom(room);
                 }
               }}
-              onBoundaryChange={handleBoundaryChange}
+              onBoundaryChange={undefined}
             />
         </motion.div>
+        
+        {/* Live Coordinate Overlay (Edit Mode Only) */}
+        {isEditMode && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute bottom-8 right-8 bg-black/80 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-xl flex items-center gap-4 z-50 pointer-events-none"
+          >
+            <div className="flex flex-col">
+              <span className="text-[8px] font-orbitron text-white/40 uppercase tracking-widest">CURSOR POSITION</span>
+              <div className="flex items-center gap-3 text-xs font-mono text-blue-400">
+                <span>X: {mouseCoords.x}</span>
+                <span className="text-white/20">|</span>
+                <span>Y: {mouseCoords.y}</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* Minimal Filter Dock */}
@@ -483,6 +671,7 @@ export default function FloorPlan() {
             { id: 'lab', label: 'LABS', color: 'bg-emerald-500' },
             { id: 'staffroom', label: 'STAFF', color: 'bg-amber-400' },
             { id: 'hod', label: 'HOD', color: 'bg-orange-500' },
+            { id: 'hall', label: 'HALLS', color: 'bg-red-500' },
             { id: 'utility', label: 'UTILS', color: 'bg-slate-400' },
           ].map((item) => {
             const isActive = activeFilters.includes(item.id);
@@ -503,7 +692,10 @@ export default function FloorPlan() {
           <div className="h-px bg-black/5 dark:bg-white/5 my-1 mx-2" />
           
           <button
-            onClick={() => setActiveFilters([])}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              setActiveFilters([]);
+            }}
             disabled={activeFilters.length === 0}
             className={`flex items-center gap-3 px-4 py-2 rounded-xl transition-all ${activeFilters.length > 0 ? 'text-blue-500 hover:bg-blue-500/10 cursor-pointer' : 'text-black/10 dark:text-white/10 cursor-default'}`}
             title="Reset Filters"
@@ -517,7 +709,7 @@ export default function FloorPlan() {
       {/* Mobile Floating Utility Bar */}
       <div className="md:hidden fixed bottom-12 left-1/2 -translate-x-1/2 z-[110] flex items-center gap-3 bg-white/90 dark:bg-[#0d0d0d]/80 backdrop-blur-2xl border border-black/10 dark:border-white/10 p-2 rounded-2xl shadow-2xl">
         <button
-          onClick={() => setIsFacultyModalOpen(true)}
+          onMouseDown={() => setIsFacultyModalOpen(true)}
           className="p-3 bg-blue-500/10 rounded-xl text-blue-500"
         >
           <Users className="w-5 h-5" />
@@ -533,6 +725,9 @@ export default function FloorPlan() {
       isOpen={isFacultyModalOpen}
       onClose={() => setIsFacultyModalOpen(false)}
       floorData={floorData}
+      facultyList={allFaculty}
+      isEditMode={isEditMode}
+      onDeleteFaculty={handleDeleteFaculty}
       onSelectFaculty={(faculty) => {
         setSelectedFacultyProfile(faculty)
         setIsFacultyModalOpen(false)
@@ -542,7 +737,11 @@ export default function FloorPlan() {
       }}
     />
 
-    <RoomModal room={selectedRoom} onClose={handleCloseRoom} />
+    <RoomModal 
+      room={selectedRoom} 
+      onClose={handleCloseRoom} 
+      onUpdateDirections={(newDirections) => handleRoomUpdate(selectedRoom.id, { directions: newDirections })}
+    />
     <FacultyProfileModal faculty={selectedFacultyProfile} onClose={handleCloseFaculty} />
   </motion.div>
   )

@@ -1,5 +1,5 @@
 export const basement = {
   buildingName: "APJ-BLOCK",
-  label: "Basement",
+  label: "Basement Floor",
   rooms: []
 };

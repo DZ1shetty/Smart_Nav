@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, User, Building, Users, Info, ChevronLeft, ChevronRight } from 'lucide-react'
+import { X, User, Building, Users, Info, ChevronLeft, ChevronRight, Edit3, Save } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-export default function RoomModal({ room, onClose }) {
+export default function RoomModal({ room, onClose, onUpdateDirections }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isEditingDirections, setIsEditingDirections] = useState(false)
+  const [editedDirections, setEditedDirections] = useState('')
+
   const images = room?.images || (room?.image ? [room.image] : [])
   
   useEffect(() => {
@@ -14,7 +17,21 @@ export default function RoomModal({ room, onClose }) {
     return () => window.removeEventListener('keydown', handleEsc)
   }, [onClose])
 
+  useEffect(() => {
+    if (room) {
+      setEditedDirections(room.directions || '')
+      setIsEditingDirections(false)
+    }
+  }, [room])
+
   if (!room) return null
+
+  const handleSave = () => {
+    if (onUpdateDirections) {
+      onUpdateDirections(editedDirections)
+    }
+    setIsEditingDirections(false)
+  }
 
   return (
     <AnimatePresence>
@@ -24,7 +41,7 @@ export default function RoomModal({ room, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-sm"
-          onClick={onClose}
+          onMouseDown={onClose}
         />
 
         <motion.div
@@ -36,7 +53,7 @@ export default function RoomModal({ room, onClose }) {
         >
           {/* Close Button */}
           <button 
-            onClick={onClose}
+            onMouseDown={onClose}
             className="absolute top-4 right-4 p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-all group z-[60] border border-black/5 dark:border-white/5 backdrop-blur-md"
             aria-label="Close"
           >
@@ -103,8 +120,51 @@ export default function RoomModal({ room, onClose }) {
                 {room.department && <InfoSection label="Affiliation" value={room.department} />}
               </div>
 
-              <div className="p-6 bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 rounded-xl">
-                <InfoSection label="Directions" value={room.directions} />
+              <div className="p-6 bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 rounded-2xl relative group/directions overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-orbitron font-black uppercase tracking-[0.2em] text-black/30 dark:text-white/20">
+                    Directions
+                  </span>
+                  {!isEditingDirections ? (
+                    <button 
+                      onClick={() => setIsEditingDirections(true)}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500 border border-blue-500/20 hover:border-blue-500 text-blue-500 hover:text-white rounded-lg transition-all duration-300 group"
+                    >
+                      <Edit3 className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                      <span className="text-[9px] font-orbitron font-black uppercase tracking-widest">Edit</span>
+                    </button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => setIsEditingDirections(false)}
+                        className="p-1.5 bg-black/5 dark:bg-white/5 hover:bg-red-500/10 border border-black/10 dark:border-white/10 hover:border-red-500/50 text-black/40 dark:text-white/30 hover:text-red-500 rounded-lg transition-all"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                      <button 
+                        onClick={handleSave}
+                        className="px-4 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-[9px] font-orbitron font-black uppercase tracking-widest rounded-lg shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2"
+                      >
+                        <Save className="w-3.5 h-3.5" />
+                        LOCK CHANGES
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {isEditingDirections ? (
+                  <textarea
+                    value={editedDirections}
+                    onChange={(e) => setEditedDirections(e.target.value)}
+                    className="w-full bg-black/5 dark:bg-white/5 border-2 border-blue-500/20 focus:border-blue-500 rounded-xl p-4 text-sm font-medium text-black dark:text-white focus:outline-none transition-all min-h-[120px] custom-scrollbar shadow-inner"
+                    placeholder="Describe the path to this room..."
+                    autoFocus
+                  />
+                ) : (
+                  <DirectionDisplay value={room.directions} />
+                )}
               </div>
             </div>
 
@@ -115,40 +175,46 @@ export default function RoomModal({ room, onClose }) {
   )
 }
 
-function InfoSection({ label, value }) {
-  const isDirections = label.toLowerCase() === 'directions';
+function DirectionDisplay({ value }) {
+  if (!value || value === 'TBD') return <p className="text-sm font-medium text-black/40 dark:text-white/20">Not specified</p>;
   
+  // Split primarily by newlines
+  let items = value.split('\n').map(item => item.trim()).filter(item => item);
+  
+  // If still one block, try splitting by patterns but more carefully
+  if (items.length === 1) {
+    items = value.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
+      .map(item => item.trim())
+      .filter(item => item);
+  }
+  
+  if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(value.trim())) {
+    return (
+      <ul className="space-y-3 mt-1">
+        {items.map((item, idx) => (
+          <li key={idx} className="flex gap-3 items-start">
+            <span className="flex-1 text-[15px] font-black leading-snug text-black dark:text-white tracking-tight">
+              {item.trim()}
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  
+  return (
+    <p className="leading-relaxed text-[15px] font-black text-black dark:text-white">
+      {value}
+    </p>
+  );
+}
+
+function InfoSection({ label, value }) {
   const renderValue = () => {
     if (!value || value === 'TBD') return 'Not specified';
     
-    if (isDirections) {
-      // Split primarily by newlines
-      let items = value.split('\n').map(item => item.trim()).filter(item => item);
-      
-      // If still one block, try splitting by patterns but more carefully
-      if (items.length === 1) {
-        items = value.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
-          .map(item => item.trim())
-          .filter(item => item);
-      }
-      
-      if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(value.trim())) {
-        return (
-          <ul className="space-y-3 mt-2">
-            {items.map((item, idx) => (
-              <li key={idx} className="flex gap-3 items-start">
-                <span className="flex-1 text-[15px] font-bold leading-snug text-black dark:text-white tracking-tight">
-                  {item.trim()}
-                </span>
-              </li>
-            ))}
-          </ul>
-        );
-      }
-    }
-    
     return (
-      <p className={`leading-relaxed text-black dark:text-white ${isDirections ? 'text-[15px] font-bold' : 'text-sm font-medium'}`}>
+      <p className="leading-relaxed text-sm font-bold text-black dark:text-white">
         {value}
       </p>
     );

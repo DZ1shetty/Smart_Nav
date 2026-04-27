@@ -25,7 +25,7 @@ export default function FacultyProfileModal({ faculty, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="absolute inset-0 bg-black/40 backdrop-blur-3xl"
-          onClick={onClose}
+          onMouseDown={onClose}
         />
 
         {/* Cinematic Backdrop Glow */}
@@ -47,7 +47,7 @@ export default function FacultyProfileModal({ faculty, onClose }) {
         >
           {/* Close Button */}
           <button 
-            onClick={onClose}
+            onMouseDown={onClose}
             className="absolute top-4 right-4 p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-all group z-50 border border-black/5 dark:border-white/5"
             aria-label="Close"
           >
@@ -92,7 +92,7 @@ export default function FacultyProfileModal({ faculty, onClose }) {
                 <Navigation className="w-3 h-3 text-blue-500" />
                 <span className="text-[9px] font-orbitron font-black uppercase tracking-widest text-black/40 dark:text-white/20">Location Details</span>
               </div>
-              <div className="text-[13px] font-bold text-black dark:text-white leading-relaxed">
+              <div className="text-[13px] font-black text-black dark:text-white leading-relaxed tracking-tight">
                 {(() => {
                   if (!directions || directions === 'TBD') return 'Located in the department staff room.';
                   

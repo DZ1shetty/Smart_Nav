@@ -144,12 +144,12 @@ body {
 
 /* GROUND, FIRST & SECOND FLOOR EXCEPTION (Scale Correction)
    These floors have viewBox of 1280 (2x larger than 4th floor's 640).
-   To physically look like 14px on the screen, we must double the SVG units to 28px.
+   To physically look like 14px on the screen, we scale SVG units to 28px.
 */
 .floor-ground .box-label,
 .floor-first .box-label,
 .floor-second .box-label {
-  font-size: 32px !important;
+  font-size: 36px !important;
 }
 
 /* THIRD FLOOR EXCEPTION (Scale Correction)
@@ -157,19 +157,15 @@ body {
    To physically look like 14px on the screen, we scale SVG units to 24px.
 */
 .floor-third .box-label {
-  font-size: 28px !important;
+  font-size: 31px !important;
 }
 
 /* FOURTH & FIFTH FLOOR (Native Scale)
    These floors use the baseline 640 viewBox, so 14px renders naturally.
-   Explicitly defining to ensure absolute parity.
 */
-.floor-fourth .box-label {
-  font-size: 14px !important;
-}
-
+.floor-fourth .box-label,
 .floor-fifth .box-label {
-  font-size: 18px !important;
+  font-size: 14px !important;
 }
 
 .coord-label {
@@ -185,7 +181,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 
   position: absolute;
-  top: -20px;
+  top: -24px;
   left: 0;
 
   white-space: nowrap;
@@ -200,17 +196,17 @@ body {
 .floor-ground .coord-label,
 .floor-first .coord-label,
 .floor-second .coord-label {
-  font-size: 20px !important;
-  top: -40px !important;
-  padding: 4px 10px !important;
+  font-size: 26px !important;
+  top: -48px !important;
+  padding: 5px 12px !important;
   border-radius: 8px !important;
   border-width: 2px !important;
 }
 
 .floor-third .coord-label {
-  font-size: 17px !important;
-  top: -34px !important;
-  padding: 3px 8px !important;
+  font-size: 22px !important;
+  top: -42px !important;
+  padding: 4px 10px !important;
   border-radius: 6px !important;
   border-width: 1.5px !important;
 }

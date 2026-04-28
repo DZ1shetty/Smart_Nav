@@ -18,6 +18,8 @@ const StaticRoom = ({ room, onClick }) => {
   const c = 6
   const w = room.width ?? room.w ?? 0;
   const h = room.height ?? room.h ?? 0;
+  const rx = room.x ?? 0;
+  const ry = room.y ?? 0;
 
   // Clickability Logic: Filter out stairs, lifts, and washrooms
   const isUtilityExcluded = 
@@ -31,14 +33,14 @@ const StaticRoom = ({ room, onClick }) => {
   const isClickable = !isCorridor && !isUtilityExcluded && room.clickable !== false;
   
   const roomPath = `
-    M ${room.x + c} ${room.y}
-    H ${room.x + w - c} 
-    L ${room.x + w} ${room.y + c}
-    V ${room.y + h - c}
-    L ${room.x + w - c} ${room.y + h}
-    H ${room.x + c}
-    L ${room.x} ${room.y + h - c}
-    V ${room.y + c}
+    M ${rx + c} ${ry}
+    H ${rx + w - c} 
+    L ${rx + w} ${ry + c}
+    V ${ry + h - c}
+    L ${rx + w - c} ${ry + h}
+    H ${rx + c}
+    L ${rx} ${ry + h - c}
+    V ${ry + c}
     Z
   `
 
@@ -72,6 +74,8 @@ const DraggableRoom = ({ room, onMove, onResize }) => {
   const c = 6
   const w = room.width ?? room.w ?? 0;
   const h = room.height ?? room.h ?? 0;
+  const rx = room.x ?? 0;
+  const ry = room.y ?? 0;
   
   // Custom Pointer Events for 1:1 Pixel Accuracy (NO CSS TRANSFORMS)
   const handlePointerDown = (e) => {
@@ -147,14 +151,14 @@ const DraggableRoom = ({ room, onMove, onResize }) => {
   };
 
   const roomPath = `
-    M ${room.x + c} ${room.y}
-    H ${room.x + w - c} 
-    L ${room.x + w} ${room.y + c}
-    V ${room.y + h - c}
-    L ${room.x + w - c} ${room.y + h}
-    H ${room.x + c}
-    L ${room.x} ${room.y + h - c}
-    V ${room.y + c}
+    M ${rx + c} ${ry}
+    H ${rx + w - c} 
+    L ${rx + w} ${ry + c}
+    V ${ry + h - c}
+    L ${rx + w - c} ${ry + h}
+    H ${rx + c}
+    L ${rx} ${ry + h - c}
+    V ${ry + c}
     Z
   `
 
@@ -202,11 +206,11 @@ const DraggableRoom = ({ room, onMove, onResize }) => {
 
 const RoomLabel = ({ room, w, h, color, showCoords }) => {
   return (
-    <foreignObject x={room.x} y={room.y} width={w} height={h} style={{ pointerEvents: 'none', overflow: 'visible' }}>
+    <foreignObject x={room.x ?? 0} y={room.y ?? 0} width={w} height={h} style={{ pointerEvents: 'none', overflow: 'visible' }}>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         {showCoords && (
           <div className="coord-label">
-            ({Math.round(room.x)}, {Math.round(room.y)})
+            ({Math.round(room.x ?? 0)}, {Math.round(room.y ?? 0)})
           </div>
         )}
         <div className="box-label" style={{ color: color }}>

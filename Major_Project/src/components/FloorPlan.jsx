@@ -8,7 +8,7 @@ import RoomModal from './RoomModal'
 import FacultyProfileModal from './FacultyProfileModal'
 import FacultyDirectoryModal from './FacultyDirectoryModal'
 import SearchSystem from './SearchSystem'
-import sharedLayouts from '../data/layouts.json'
+import { DEFAULT_LAYOUTS } from '../data/layouts'
 
 // --- GLOBAL SAFETY UTILITY ---
 const SafeComponent = (Component, props) => {
@@ -58,58 +58,41 @@ export default function FloorPlan() {
    * Prevents undefined layout on floor switch and handles first-time loads.
    */
   useEffect(() => {
-    async function loadLayout() {
-      // Try API first
+    const local = localStorage.getItem(`layout_${floorId}`);
+
+    if (local) {
       try {
-        const res = await fetch(`/api/layout/${floorId}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (isValidLayout(data)) {
-            setRooms(data.rooms);
-            setFaculty(data.faculty || []);
-            if (data.mapImage) setMapImage(data.mapImage);
-            setIsLocked(data.locked !== false);
-            return;
-          }
+        const data = JSON.parse(local);
+        if (isValidLayout(data)) {
+          setRooms(data.rooms || (Array.isArray(data) ? data : []));
+          setFaculty(data.faculty || []);
+          if (data.mapImage) setMapImage(data.mapImage);
+          setIsLocked(false);
+          return;
         }
-      } catch (err) {
-        console.warn("API load unavailable, checking localStorage...");
-      }
-
-      // STAGE 1: LOCAL FALLBACK
-      const saved = localStorage.getItem(`layout_${floorId}`);
-      if (saved) {
-        try {
-          const data = JSON.parse(saved);
-          if (isValidLayout(data)) {
-            setRooms(data.rooms);
-            setFaculty(data.faculty || []);
-            if (data.mapImage) setMapImage(data.mapImage);
-            setIsLocked(false);
-            return;
-          }
-        } catch (e) {
-          console.error("Corrupted layout in storage:", e);
-        }
-      }
-
-      // STAGE 0: GLOBAL SHARED FALLBACK (NEW)
-      // This ensures any new user sees the layout saved in layouts.json
-      const shared = sharedLayouts[floorId];
-      if (shared && isValidLayout(shared)) {
-        setRooms(shared.rooms || []);
-        setFaculty(shared.faculty || []);
-        setIsLocked(true); // Default to locked for shared data
-      } else {
-        // EMPTY INITIAL STATE (SAFE START)
-        setRooms([]);
-        setFaculty([]);
-        setMapImage(null);
-        setIsLocked(false);
+      } catch (e) {
+        console.error("Corrupted layout in storage:", e);
       }
     }
 
-    loadLayout();
+    // FALLBACK TO REPO DEFAULT
+    const fallback = DEFAULT_LAYOUTS[floorId] || { rooms: [], faculty: [] };
+    const initialRooms = fallback.rooms || (Array.isArray(fallback) ? fallback : []);
+    const initialFaculty = fallback.faculty || [];
+
+    setRooms(initialRooms);
+    setFaculty(initialFaculty);
+    setMapImage(null);
+    setIsLocked(true);
+
+    // 🔥 IMPORTANT: seed localStorage for future
+    localStorage.setItem(
+      `layout_${floorId}`,
+      JSON.stringify({
+        rooms: initialRooms,
+        faculty: initialFaculty
+      })
+    );
   }, [floorId]);
 
   // Merge loaded room positions with static data (for metadata)
@@ -231,21 +214,38 @@ export default function FloorPlan() {
   };
 
   const handleResetDefault = () => {
-    const saved = localStorage.getItem(`layout_${floorId}`);
-    if (!saved) {
-      alert("No saved layout found to restore.");
-      return;
-    }
-    try {
-      const data = JSON.parse(saved);
-      if (isValidLayout(data)) {
-        setRooms(data.rooms);
-        setFaculty(data.faculty || []);
-        if (data.mapImage) setMapImage(data.mapImage);
+    const local = localStorage.getItem(`layout_${floorId}`);
+
+    if (local) {
+      try {
+        const data = JSON.parse(local);
+        if (isValidLayout(data)) {
+          setRooms(data.rooms || (Array.isArray(data) ? data : []));
+          setFaculty(data.faculty || []);
+          if (data.mapImage) setMapImage(data.mapImage);
+          return;
+        }
+      } catch (e) {
+        console.error("Error parsing local layout", e);
       }
-    } catch (e) {
-      console.error("Corrupted layout data", e);
     }
+
+    // FALLBACK
+    const fallback = DEFAULT_LAYOUTS[floorId] || { rooms: [], faculty: [] };
+    const initialRooms = fallback.rooms || (Array.isArray(fallback) ? fallback : []);
+    const initialFaculty = fallback.faculty || [];
+
+    setRooms(initialRooms);
+    setFaculty(initialFaculty);
+    
+    // Seed localStorage
+    localStorage.setItem(
+      `layout_${floorId}`,
+      JSON.stringify({
+        rooms: initialRooms,
+        faculty: initialFaculty
+      })
+    );
   };
 
   const handleDeleteFaculty = (facultyId) => {

@@ -1,7 +1,0 @@
-node_modules
-dist
-.env
-data/layouts/*.json
-data/logs/*.log
-!data/layouts/.gitkeep
-!data/logs/.gitkeep

@@ -1,0 +1,22 @@
+/**
+ * SMART NAV - GLOBAL CONFIGURATION
+ * 
+ * This file manages asset paths and cloud settings.
+ * To point to a different repository, just update the GITHUB_USER and GITHUB_REPO variables.
+ */
+
+// --- CONFIGURATION SETTINGS ---
+const GITHUB_USER = "DZ1shetty";
+const GITHUB_REPO = "Smart_Nav";
+const GITHUB_BRANCH = "main";
+
+// SET THIS TO 'true' to use GitHub as a Cloud CDN.
+// SET THIS TO 'false' to use your local public/ folder.
+export const IS_CLOUD = false;
+
+// --- DYNAMIC BASE URL ---
+export const IMG_BASE_URL = IS_CLOUD 
+  ? `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/Major_Project/public`
+  : ""; // Empty string resolves to local root in Vite (e.g. /apj-block-images)
+
+console.log(`[SmartNav Config] Using ${IS_CLOUD ? 'CLOUD' : 'LOCAL'} image source: ${IMG_BASE_URL || 'Local public/'}`);

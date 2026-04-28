@@ -1,0 +1,2497 @@
+{
+  "basement": {
+    "rooms": [],
+    "faculty": []
+  },
+  "ground": {
+    "rooms": [
+      {
+        "id": "alumni-lounge",
+        "name": "NITTE ALUMINI LOUNGE",
+        "x": 30,
+        "y": 50,
+        "w": 220,
+        "h": 200,
+        "type": "utility",
+        "description": "Alumni Lounge Area",
+        "image": "/apj-block-images/ground-floor/alumni-lounge.jpg",
+        "directions": "Top left area.",
+        "tags": [
+          "lounge",
+          "alumni"
+        ]
+      },
+      {
+        "id": "board-room-final",
+        "name": "BOARD ROOM",
+        "x": 310,
+        "y": 50,
+        "w": 360,
+        "h": 80,
+        "type": "board room",
+        "clickable": true,
+        "description": "Main Board Room",
+        "image": "/apj-block-images/ground-floor/ground-board-room.jpg",
+        "directions": "Top center area.",
+        "tags": [
+          "board",
+          "room"
+        ]
+      },
+      {
+        "id": "vinay-hegde",
+        "name": "N.VINAY HEGDE CABIN",
+        "x": 740,
+        "y": 50,
+        "w": 220,
+        "h": 100,
+        "type": "hod",
+        "description": "President's Cabin - N. Vinay Hegde",
+        "faculty": "SHRI. N. VINAYA HEGDE",
+        "portrait": "/apj-block-images/ground-floor/ground-floor faculty/Shri. N. Vinaya Hegde.png",
+        "image": "/apj-block-images/ground-floor/vinay-hegde.jpg",
+        "directions": "Top right area.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "vice-principal",
+        "name": "VICE PRINCIPAL CABIN",
+        "x": 30,
+        "y": 280,
+        "w": 220,
+        "h": 250,
+        "type": "hod",
+        "description": "Vice Principal's Office",
+        "faculty": "DR. NAGESH PRABHU",
+        "portrait": "/apj-block-images/ground-floor/ground-floor faculty/Dr.NageshPrabhu.png",
+        "image": "/apj-block-images/ground-floor/vice-principal.jpg",
+        "directions": "Left side, upper middle.",
+        "tags": [
+          "office",
+          "principal"
+        ]
+      },
+      {
+        "id": "vice-president",
+        "name": "VICE PRESIDENT CABIN (TE)",
+        "x": 30,
+        "y": 560,
+        "w": 220,
+        "h": 120,
+        "type": "hod",
+        "description": "Vice President Cabin (Technical Education)",
+        "faculty": "DR. GOPAL MUGERAYA",
+        "portrait": "/apj-block-images/ground-floor/ground-floor faculty/Dr.GopalMugeraya.png",
+        "image": "/apj-block-images/ground-floor/vice-president.jpg?v=2",
+        "directions": "Left side middle.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "washroom-g",
+        "name": "WASHROOM",
+        "x": 30,
+        "y": 710,
+        "w": 220,
+        "h": 120,
+        "type": "utility",
+        "description": "Washroom Facilities",
+        "image": "https://placehold.co/600x400?text=Washroom",
+        "directions": "Left side middle.",
+        "tags": [
+          "toilet"
+        ]
+      },
+      {
+        "id": "examination-center",
+        "name": "EXAMINATION CENTER",
+        "x": 30,
+        "y": 920,
+        "w": 220,
+        "h": 520,
+        "type": "utility",
+        "description": "Main Examination Section",
+        "image": "/apj-block-images/ground-floor/exam-section.jpg?v=2",
+        "directions": "Large vertical block on the left.",
+        "tags": [
+          "exam",
+          "center"
+        ]
+      },
+      {
+        "id": "stairs-1",
+        "name": "STAIRS-1",
+        "x": 400,
+        "y": 600,
+        "w": 160,
+        "h": 60,
+        "type": "utility",
+        "description": "Upper central stairs",
+        "image": "https://placehold.co/600x400?text=Stairs+1",
+        "directions": "Center area.",
+        "tags": [
+          "stairs"
+        ]
+      },
+      {
+        "id": "lift-g",
+        "name": "LIFT",
+        "x": 400,
+        "y": 750,
+        "w": 160,
+        "h": 70,
+        "type": "utility",
+        "description": "Elevator",
+        "image": "https://placehold.co/600x400?text=Lift",
+        "directions": "Center area.",
+        "tags": [
+          "lift"
+        ]
+      },
+      {
+        "id": "stairs-2",
+        "name": "STAIRS-2",
+        "x": 350,
+        "y": 1420,
+        "w": 160,
+        "h": 60,
+        "type": "utility",
+        "description": "Lower central stairs",
+        "image": "https://placehold.co/600x400?text=Stairs+2",
+        "directions": "Bottom center area.",
+        "tags": [
+          "stairs"
+        ]
+      },
+      {
+        "id": "principal-office",
+        "name": "PRINCIPAL CABIN",
+        "x": 740,
+        "y": 450,
+        "w": 220,
+        "h": 100,
+        "type": "hod",
+        "description": "Principal's Office",
+        "faculty": "DR. NIRANJAN N. CHIPLUNKAR",
+        "portrait": "/apj-block-images/ground-floor/ground-floor faculty/Prof. Niranjan N Chiplunkar.png",
+        "image": "/apj-block-images/ground-floor/principal.jpg",
+        "directions": "Middle right area.",
+        "tags": [
+          "office",
+          "principal"
+        ]
+      },
+      {
+        "id": "deputy-registrar-final",
+        "name": "DEPUTY REGISTRAR OFFICE",
+        "x": 790,
+        "y": 900,
+        "w": 190,
+        "h": 200,
+        "type": "deputy room",
+        "clickable": true,
+        "description": "Office of Deputy Registrar",
+        "faculty": "DR. REKHA BHANDARKAR",
+        "portrait": "/apj-block-images/ground-floor/ground-floor faculty/Dr.RekhaBhandarkar .png",
+        "image": "/apj-block-images/ground-floor/ground-deputy-registrar.jpg",
+        "directions": "Lower right area.",
+        "tags": [
+          "office",
+          "registry"
+        ]
+      },
+      {
+        "id": "nandhini-hall",
+        "name": "NANDHINI SEMINAR HALL",
+        "x": 790,
+        "y": 1200,
+        "w": 220,
+        "h": 240,
+        "type": "hall",
+        "description": "Nandhini Seminar Hall",
+        "image": "/apj-block-images/ground-floor/nandhini-hall.jpg?v=2",
+        "directions": "Bottom right area.",
+        "tags": [
+          "seminar",
+          "hall"
+        ]
+      }
+    ],
+    "faculty": [
+      {
+        "name": "SHRI. N. VINAYA HEGDE",
+        "image": "/apj-block-images/ground-floor/ground-floor faculty/Shri. N. Vinaya Hegde.png",
+        "roomId": "vinay-hegde",
+        "department": "Administration"
+      },
+      {
+        "name": "DR. NIRANJAN N. CHIPLUNKAR",
+        "image": "/apj-block-images/ground-floor/ground-floor faculty/Prof. Niranjan N Chiplunkar.png",
+        "roomId": "principal-office",
+        "department": "Principal Office"
+      },
+      {
+        "name": "DR. NAGESH PRABHU",
+        "image": "/apj-block-images/ground-floor/ground-floor faculty/Dr.NageshPrabhu.png",
+        "roomId": "vice-principal",
+        "department": "Vice Principal Office"
+      },
+      {
+        "name": "DR. GOPAL MUGERAYA",
+        "image": "/apj-block-images/ground-floor/ground-floor faculty/Dr.GopalMugeraya.png",
+        "roomId": "vice-president",
+        "department": "Technical Education"
+      },
+      {
+        "name": "DR. REKHA BHANDARKAR",
+        "image": "/apj-block-images/ground-floor/ground-floor faculty/Dr.RekhaBhandarkar .png",
+        "roomId": "deputy-registrar-final",
+        "department": "Deputy Registrar Office"
+      }
+    ]
+  },
+  "first": {
+    "rooms": [
+      {
+        "id": "ug-project-lab",
+        "name": "BTL05",
+        "x": 30,
+        "y": 50,
+        "w": 220,
+        "h": 220,
+        "type": "lab",
+        "description": "Undergraduate Project Laboratory",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.24 PM.jpeg",
+        "directions": "Top left corner.",
+        "tags": [
+          "lab",
+          "project",
+          "ug",
+          "BTL05"
+        ]
+      },
+      {
+        "id": "bio-info-lab",
+        "name": "BTL06",
+        "x": 350,
+        "y": 150,
+        "w": 320,
+        "h": 180,
+        "type": "lab",
+        "description": "Bioinformatics Laboratory",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.24 PM (1).jpeg",
+        "directions": "Top center area.",
+        "tags": [
+          "lab",
+          "bio",
+          "BTL06"
+        ]
+      },
+      {
+        "id": "seminar-hall-1",
+        "name": "SEMINAR HALL",
+        "x": 740,
+        "y": 50,
+        "w": 180,
+        "h": 120,
+        "type": "hall",
+        "description": "Department Seminar Hall",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.25 PM.jpeg",
+        "directions": "Top right area.",
+        "tags": [
+          "seminar",
+          "hall"
+        ]
+      },
+      {
+        "id": "btl04",
+        "name": "BTL04",
+        "x": 30,
+        "y": 320,
+        "w": 200,
+        "h": 180,
+        "type": "lab",
+        "description": "Biotechnology Lab 04",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.15 PM.jpeg",
+        "directions": "Left side, upper middle.",
+        "tags": [
+          "lab",
+          "bt",
+          "04"
+        ]
+      },
+      {
+        "id": "btl03",
+        "name": "BTL03",
+        "x": 30,
+        "y": 540,
+        "w": 200,
+        "h": 180,
+        "type": "lab",
+        "description": "Biotechnology Lab 03",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.14 PM (1).jpeg",
+        "directions": "Left side middle.",
+        "tags": [
+          "lab",
+          "bt",
+          "03"
+        ]
+      },
+      {
+        "id": "washroom-1",
+        "name": "WASHROOM",
+        "x": 30,
+        "y": 760,
+        "w": 220,
+        "h": 60,
+        "type": "utility",
+        "description": "Restroom facilities",
+        "image": "https://placehold.co/600x400?text=Washroom",
+        "directions": "Left side middle.",
+        "tags": [
+          "toilet"
+        ]
+      },
+      {
+        "id": "btl02",
+        "name": "BTL02",
+        "x": 30,
+        "y": 860,
+        "w": 220,
+        "h": 280,
+        "type": "lab",
+        "description": "Biotechnology Lab 02",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.23 PM (1).jpeg",
+        "directions": "Left side, lower middle.",
+        "tags": [
+          "lab",
+          "bt",
+          "02"
+        ]
+      },
+      {
+        "id": "btl12",
+        "name": "BTL12",
+        "x": 30,
+        "y": 1180,
+        "w": 220,
+        "h": 320,
+        "type": "lab",
+        "description": "Biotechnology Lab 12",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.22 PM.jpeg",
+        "directions": "Bottom left corner.",
+        "tags": [
+          "lab",
+          "bt",
+          "12"
+        ]
+      },
+      {
+        "id": "stairs-1",
+        "name": "STAIRS-1",
+        "x": 420,
+        "y": 800,
+        "w": 160,
+        "h": 60,
+        "type": "utility",
+        "description": "Upper central stairs",
+        "image": "https://placehold.co/600x400?text=Stairs+1",
+        "directions": "Center area.",
+        "tags": [
+          "stairs"
+        ]
+      },
+      {
+        "id": "lift-1",
+        "name": "LIFT",
+        "x": 420,
+        "y": 920,
+        "w": 160,
+        "h": 60,
+        "type": "utility",
+        "description": "Elevator",
+        "image": "https://placehold.co/600x400?text=Lift",
+        "directions": "Center area.",
+        "tags": [
+          "lift"
+        ]
+      },
+      {
+        "id": "purchase-section",
+        "name": "PURCHASE SECTION",
+        "x": 250,
+        "y": 1100,
+        "w": 180,
+        "h": 60,
+        "fontSize": 20,
+        "type": "staffroom",
+        "description": "Purchase and Procurement Section",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.23 PM.jpeg",
+        "directions": "Lower center left.",
+        "tags": [
+          "office",
+          "purchase"
+        ]
+      },
+      {
+        "id": "rajesh-shetty",
+        "name": "DR.RAJESH SHETTY",
+        "x": 550,
+        "y": 1150,
+        "w": 180,
+        "h": 80,
+        "fontSize": 22,
+        "type": "hod",
+        "description": "Dr. Rajesh Shetty Office",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.20 PM (1).jpeg",
+        "directions": "Lower center right.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "seminar-hall-2",
+        "name": "SEMINAR HALL",
+        "x": 740,
+        "y": 440,
+        "w": 160,
+        "h": 100,
+        "type": "hall",
+        "description": "Secondary Seminar Hall",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.25 PM.jpeg",
+        "directions": "Middle right area.",
+        "tags": [
+          "seminar",
+          "hall"
+        ]
+      },
+      {
+        "id": "shambavi-hall",
+        "name": "SHAMBAVI SEMINAR HALL",
+        "x": 1000,
+        "y": 620,
+        "w": 240,
+        "h": 110,
+        "type": "hall",
+        "description": "Shambavi Seminar Hall",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.20 PM.jpeg",
+        "directions": "Bulge section on the right.",
+        "tags": [
+          "seminar",
+          "hall"
+        ]
+      },
+      {
+        "id": "lh-110",
+        "name": "LH-110",
+        "x": 740,
+        "y": 1080,
+        "w": 160,
+        "h": 60,
+        "type": "classroom",
+        "description": "Lecture Hall 110",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.14 PM.jpeg",
+        "directions": "Lower right area.",
+        "tags": [
+          "class",
+          "lh",
+          "110"
+        ]
+      },
+      {
+        "id": "lh-112",
+        "name": "LH-112",
+        "x": 740,
+        "y": 1350,
+        "w": 160,
+        "h": 60,
+        "type": "classroom",
+        "description": "Lecture Hall 112",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.20 PM (2).jpeg",
+        "directions": "Bottom right area.",
+        "tags": [
+          "class",
+          "lh",
+          "112"
+        ]
+      },
+      {
+        "id": "btl01",
+        "name": "BTL01",
+        "x": 220,
+        "y": 1470,
+        "w": 160,
+        "h": 70,
+        "type": "lab",
+        "description": "Biotechnology Lab 01",
+        "image": "/apj-block-images/1st-floor/WhatsApp Image 2026-04-27 at 3.04.21 PM.jpeg",
+        "directions": "Bottom center left.",
+        "tags": [
+          "lab",
+          "bt",
+          "01"
+        ]
+      },
+      {
+        "id": "stairs-2",
+        "name": "STAIRS-2",
+        "x": 450,
+        "y": 1470,
+        "w": 160,
+        "h": 70,
+        "type": "utility",
+        "description": "Lower central stairs",
+        "image": "https://placehold.co/600x400?text=Stairs+2",
+        "directions": "Bottom center right.",
+        "tags": [
+          "stairs"
+        ]
+      }
+    ],
+    "faculty": [
+      {
+        "name": "DR. K RAJESH SHETTY",
+        "image": "/apj-block-images/1st-floor/1st-floor staff room/WhatsApp Image 2026-04-24 at 9.59.08 PM.jpeg",
+        "roomId": "rajesh-shetty",
+        "department": "Admissions"
+      }
+    ]
+  },
+  "second": {
+    "rooms": [
+      {
+        "id": "lh-211",
+        "name": "LH211",
+        "x": 30,
+        "y": 50,
+        "w": 210,
+        "h": 80,
+        "type": "classroom",
+        "description": "Classroom LH211",
+        "capacity": 60,
+        "image": "/apj-block-images/2nd-floor/LH-211.jpeg",
+        "directions": "Located at the top left corner.",
+        "tags": [
+          "class",
+          "lh",
+          "211"
+        ]
+      },
+      {
+        "id": "staff-room-top",
+        "name": "STAFF ROOM",
+        "x": 310,
+        "y": 70,
+        "w": 360,
+        "h": 80,
+        "type": "staffroom",
+        "description": "Main Staff Room",
+        "department": "General",
+        "capacity": 15,
+        "image": "/apj-block-images/2nd-floor/WhatsApp Image 2026-04-23 at 3.43.12 PM.jpeg",
+        "directions": "Top center staff area.",
+        "tags": [
+          "office",
+          "staff"
+        ]
+      },
+      {
+        "id": "lh-212",
+        "name": "LH212",
+        "x": 730,
+        "y": 30,
+        "w": 200,
+        "h": 80,
+        "type": "classroom",
+        "description": "Classroom LH212",
+        "capacity": 60,
+        "image": "/apj-block-images/2nd-floor/LH-212.jpeg",
+        "directions": "Located at the top right corner.",
+        "tags": [
+          "class",
+          "lh",
+          "212"
+        ]
+      },
+      {
+        "id": "staff-room-pair-1",
+        "name": "STAFF ROOM",
+        "x": 320,
+        "y": 210,
+        "w": 140,
+        "h": 190,
+        "type": "staffroom",
+        "description": "Staff workspace",
+        "image": "/apj-block-images/2nd-floor/WhatsApp Image 2026-04-23 at 3.43.17 PM.jpeg",
+        "directions": "Center-left staff area.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "staff-room-pair-2",
+        "name": "STAFF ROOM",
+        "x": 500,
+        "y": 210,
+        "w": 140,
+        "h": 190,
+        "type": "staffroom",
+        "description": "Staff workspace",
+        "image": "/apj-block-images/2nd-floor/WhatsApp Image 2026-04-23 at 3.43.26 PM.jpeg",
+        "directions": "Center-right staff area.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "btl09",
+        "name": "BTL09",
+        "x": 10,
+        "y": 260,
+        "w": 210,
+        "h": 210,
+        "type": "lab",
+        "description": "Bioprocess Engineering Lab (BTL09)",
+        "department": "Biotechnology",
+        "capacity": 40,
+        "image": "/apj-block-images/2nd-floor/bioprocess(BTL09).jpeg",
+        "directions": "Main biotech lab on the left.",
+        "tags": [
+          "lab",
+          "bt",
+          "9"
+        ]
+      },
+      {
+        "id": "washroom-2",
+        "name": "WASHROOM",
+        "x": 10,
+        "y": 520,
+        "w": 210,
+        "h": 80,
+        "type": "utility",
+        "description": "Restroom facilities",
+        "image": "https://placehold.co/400x600?text=Washroom",
+        "directions": "Left side washroom.",
+        "tags": [
+          "toilet"
+        ]
+      },
+      {
+        "id": "hod-cabin-bt",
+        "name": "BT HOD",
+        "x": 10,
+        "y": 640,
+        "w": 260,
+        "h": 130,
+        "type": "hod",
+        "description": "Head of Department - Biotechnology",
+        "department": "BT",
+        "image": "/apj-block-images/2nd-floor/HOD(BT).jpeg",
+        "directions": "Left column, HOD area.",
+        "tags": [
+          "office",
+          "hod",
+          "BT HOD"
+        ]
+      },
+      {
+        "id": "staff-room-mid-2f",
+        "name": "STAFF ROOM",
+        "x": 10,
+        "y": 800,
+        "w": 230,
+        "h": 80,
+        "type": "staffroom",
+        "description": "Department staff room",
+        "image": "/apj-block-images/2nd-floor/WhatsApp Image 2026-04-23 at 3.43.27 PM.jpeg",
+        "directions": "Mid-left staff room.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "btl08",
+        "name": "BTL08",
+        "x": 10,
+        "y": 910,
+        "w": 220,
+        "h": 80,
+        "type": "lab",
+        "description": "Biotechnology Lab BTL08",
+        "department": "BT",
+        "capacity": 30,
+        "image": "/apj-block-images/2nd-floor/BTL08.jpeg",
+        "directions": "Biotech lab BTL08.",
+        "tags": [
+          "lab",
+          "bt",
+          "8"
+        ]
+      },
+      {
+        "id": "btl07",
+        "name": "BTL07",
+        "x": 10,
+        "y": 1020,
+        "w": 220,
+        "h": 90,
+        "type": "lab",
+        "description": "Immunology Lab (BTL07)",
+        "department": "BT",
+        "capacity": 30,
+        "image": "/apj-block-images/2nd-floor/immunology lab(BTL07).jpeg",
+        "directions": "Biotech lab BTL07.",
+        "tags": [
+          "lab",
+          "bt",
+          "7"
+        ]
+      },
+      {
+        "id": "btl10",
+        "name": "BTL10",
+        "x": 160,
+        "y": 1220,
+        "w": 160,
+        "h": 80,
+        "type": "utility",
+        "description": "Department Library (BTL10)",
+        "department": "BT",
+        "capacity": 10,
+        "image": "/apj-block-images/2nd-floor/research_lab(BTL10).jpeg",
+        "directions": "Bottom left corner library.",
+        "tags": [
+          "library",
+          "bt"
+        ]
+      },
+      {
+        "id": "stairs-1-2",
+        "name": "STAIRS",
+        "x": 400,
+        "y": 560,
+        "w": 220,
+        "h": 80,
+        "type": "utility",
+        "description": "Main building staircase",
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "Upper center stairs.",
+        "tags": [
+          "stairs"
+        ]
+      },
+      {
+        "id": "lift-2",
+        "name": "LIFT",
+        "x": 390,
+        "y": 740,
+        "w": 230,
+        "h": 80,
+        "type": "utility",
+        "description": "Building elevator",
+        "image": "https://placehold.co/400x220?text=Lift",
+        "directions": "Center lift area.",
+        "tags": [
+          "lift"
+        ]
+      },
+      {
+        "id": "staff-room-vert-2f",
+        "name": "STAFF ROOM",
+        "x": 520,
+        "y": 970,
+        "w": 140,
+        "h": 200,
+        "type": "staffroom",
+        "description": "Vertical staff workspace",
+        "image": "/apj-block-images/2nd-floor/WhatsApp Image 2026-04-23 at 3.43.30 PM (1).jpeg",
+        "directions": "Lower center staff area.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "stairs-2-2f",
+        "name": "STAIRS",
+        "x": 460,
+        "y": 1280,
+        "w": 210,
+        "h": 80,
+        "type": "utility",
+        "description": "Secondary building staircase",
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "Bottom center stairs.",
+        "tags": [
+          "stairs"
+        ]
+      },
+      {
+        "id": "lh-210",
+        "name": "LH210",
+        "x": 790,
+        "y": 430,
+        "w": 220,
+        "h": 80,
+        "type": "classroom",
+        "description": "Classroom LH210",
+        "capacity": 60,
+        "image": "/apj-block-images/2nd-floor/LH-210.jpeg",
+        "directions": "Right column classroom.",
+        "tags": [
+          "class",
+          "lh",
+          "210"
+        ]
+      },
+      {
+        "id": "btl11",
+        "name": "BTL11",
+        "x": 760,
+        "y": 940,
+        "w": 220,
+        "h": 160,
+        "type": "lab",
+        "description": "Research Lab (BTL11)",
+        "department": "BT",
+        "capacity": 25,
+        "image": "/apj-block-images/2nd-floor/research_lab(BTL 11).jpeg",
+        "directions": "Right side research lab.",
+        "tags": [
+          "lab",
+          "bt",
+          "research"
+        ]
+      },
+      {
+        "id": "metrology-lab",
+        "name": "METROLOGY LAB",
+        "x": 760,
+        "y": 1180,
+        "w": 220,
+        "h": 320,
+        "type": "lab",
+        "description": "Metrology and Measurement Lab",
+        "department": "Mechanical/BT",
+        "capacity": 50,
+        "image": "/apj-block-images/2nd-floor/Metrology_lab.jpeg",
+        "directions": "Bottom right large lab.",
+        "tags": [
+          "lab",
+          "metrology"
+        ]
+      },
+      {
+        "id": "corridor-2",
+        "name": "",
+        "x": 960,
+        "y": 700,
+        "w": 320,
+        "h": 500,
+        "type": "corridor",
+        "clickable": false,
+        "description": "Open corridor zone.",
+        "image": "",
+        "directions": "TBD",
+        "tags": []
+      }
+    ],
+    "faculty": [
+      {
+        "name": "Dr. UJWAL P",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.31 PM (1).jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. SHYAMA PRASAD SAJANKILA",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.31 PM.jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. VINAYAKA B SHET",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.32 PM (1).jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. ANIL KUMAR H S",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.32 PM (2).jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. VENKATESH KAMATH H",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.32 PM.jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. VIDYA S M",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.33 PM (1).jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      },
+      {
+        "name": "Dr. CHETAN D M",
+        "image": "/apj-block-images/2nd-floor/2nd-floor staff room/WhatsApp Image 2026-04-24 at 10.17.33 PM.jpeg",
+        "roomId": "staff-room-top",
+        "department": "General"
+      }
+    ]
+  },
+  "third": {
+    "rooms": [
+      {
+        "id": "lh-311",
+        "name": "LH-311",
+        "x": 70,
+        "y": 40,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-311",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-311.jpeg",
+        "directions": "Located at the top left corner of the 3rd floor.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "311"
+        ]
+      },
+      {
+        "id": "staff-room-top",
+        "name": "STAFF ROOM",
+        "x": 320,
+        "y": 40,
+        "w": 220,
+        "h": 90,
+        "type": "staffroom",
+        "description": "Main Staff Room",
+        "department": "General",
+        "capacity": 15,
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (1).jpeg",
+        "directions": "Located at the top center of the 3rd floor.",
+        "tags": [
+          "office",
+          "staff"
+        ]
+      },
+      {
+        "id": "lh-312",
+        "name": "LH-312",
+        "x": 570,
+        "y": 40,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-312",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-312.jpeg",
+        "directions": "Located at the top right corner of the 3rd floor.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "312"
+        ]
+      },
+      {
+        "id": "staff-room-mid-1",
+        "name": "STAFF ROOM",
+        "x": 310,
+        "y": 170,
+        "w": 110,
+        "h": 140,
+        "type": "staffroom",
+        "description": "Staff workspace",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (2).jpeg",
+        "directions": "TBD",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "staff-room-mid-2",
+        "name": "STAFF ROOM",
+        "x": 440,
+        "y": 170,
+        "w": 110,
+        "h": 140,
+        "type": "staffroom",
+        "description": "Staff workspace",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (1).jpeg",
+        "directions": "TBD",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "lh-309",
+        "name": "LH-309",
+        "x": 70,
+        "y": 340,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-309",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-309.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "309"
+        ]
+      },
+      {
+        "id": "lh-310",
+        "name": "LH-310",
+        "x": 570,
+        "y": 400,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-310",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-310.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "310"
+        ]
+      },
+      {
+        "id": "washroom-3",
+        "name": "WASHROOM",
+        "x": 70,
+        "y": 480,
+        "w": 220,
+        "h": 100,
+        "type": "utility",
+        "description": "Restroom",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.31 PM (1).jpeg",
+        "directions": "TBD",
+        "tags": [
+          "toilet",
+          "restroom"
+        ]
+      },
+      {
+        "id": "stairs-top-3",
+        "name": "STAIRS-1",
+        "x": 320,
+        "y": 550,
+        "w": 220,
+        "h": 70,
+        "type": "utility",
+        "description": "Main building staircase",
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "TBD",
+        "tags": [
+          "stairs",
+          "steps"
+        ]
+      },
+      {
+        "id": "ladies-common-room",
+        "name": "LADIES ROOM",
+        "x": 70,
+        "y": 640,
+        "w": 220,
+        "h": 100,
+        "type": "utility",
+        "description": "Common room for ladies",
+        "image": "/apj-block-images/3th-floor/LADIES_ROOM.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "rest",
+          "girls"
+        ]
+      },
+      {
+        "id": "lift-3",
+        "name": "LIFT",
+        "x": 320,
+        "y": 680,
+        "w": 220,
+        "h": 70,
+        "type": "utility",
+        "description": "Building elevator",
+        "image": "https://placehold.co/400x220?text=Lift",
+        "directions": "TBD",
+        "tags": [
+          "lift",
+          "elevator"
+        ]
+      },
+      {
+        "id": "lh-308",
+        "name": "LH-308",
+        "x": 570,
+        "y": 720,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-308",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-308.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "308"
+        ]
+      },
+      {
+        "id": "ec-staff-room-1",
+        "name": "STAFF ROOM",
+        "x": 320,
+        "y": 40,
+        "w": 240,
+        "h": 120,
+        "type": "staffroom",
+        "description": "Main ECE Staff Office",
+        "department": "ECE",
+        "capacity": 15,
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.44.13 PM.jpeg",
+        "directions": "Located at the top center of the 3rd floor, directly across from the main stairs.",
+        "tags": [
+          "office",
+          "staff",
+          "ece"
+        ]
+      },
+      {
+        "id": "ec-staff-room-2",
+        "name": "STAFF ROOM",
+        "x": 70,
+        "y": 960,
+        "w": 240,
+        "h": 120,
+        "type": "staffroom",
+        "description": "E&C Department Staff Room",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.28 PM.jpeg",
+        "directions": "Located at the bottom section, left side.",
+        "tags": [
+          "office",
+          "ec"
+        ]
+      },
+      {
+        "id": "staff-room-bot-1",
+        "name": "STAFF ROOM",
+        "x": 330,
+        "y": 920,
+        "w": 100,
+        "h": 150,
+        "type": "staffroom",
+        "description": "Department staff room",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (1).jpeg",
+        "directions": "Located in the lower section, near the center.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "staff-room-bot-2",
+        "name": "STAFF ROOM",
+        "x": 450,
+        "y": 920,
+        "w": 100,
+        "h": 150,
+        "type": "staffroom",
+        "description": "Department staff room",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.29 PM (2).jpeg",
+        "directions": "Located in the lower section, near the center.",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "lh-306",
+        "name": "LH-306",
+        "x": 570,
+        "y": 1040,
+        "w": 220,
+        "h": 90,
+        "type": "classroom",
+        "description": "Classroom LH-306",
+        "capacity": 60,
+        "image": "/apj-block-images/3th-floor/LH-306.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "306"
+        ]
+      },
+      {
+        "id": "texas-instruments",
+        "name": "TEXAS INSTRUMENTS",
+        "x": 70,
+        "y": 1180,
+        "w": 240,
+        "h": 90,
+        "type": "lab",
+        "description": "Texas Instruments Innovation Lab",
+        "department": "E&C",
+        "image": "/apj-block-images/3th-floor/TEXAS.jpeg",
+        "directions": "TBD",
+        "tags": [
+          "lab",
+          "ec",
+          "innovation",
+          "embedded",
+          "ti",
+          "texas",
+          "electronics"
+        ]
+      },
+      {
+        "id": "staff-room-bottom-left",
+        "name": "STAFF ROOM",
+        "x": 85,
+        "y": 1300,
+        "w": 220,
+        "h": 70,
+        "type": "staffroom",
+        "description": "Auxiliary staff room",
+        "image": "/apj-block-images/3th-floor/WhatsApp Image 2026-04-23 at 3.43.32 PM (1).jpeg",
+        "directions": "TBD",
+        "tags": [
+          "office"
+        ]
+      },
+      {
+        "id": "stairs-bottom-3",
+        "name": "STAIRS-2",
+        "x": 330,
+        "y": 1300,
+        "w": 220,
+        "h": 70,
+        "type": "utility",
+        "description": "Secondary building staircase",
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "TBD",
+        "tags": [
+          "stairs",
+          "steps"
+        ]
+      },
+      {
+        "id": "corridor-3",
+        "name": "",
+        "x": 850,
+        "y": 500,
+        "w": 250,
+        "h": 450,
+        "type": "corridor",
+        "clickable": false,
+        "description": "Open corridor zone.",
+        "image": "",
+        "directions": "TBD",
+        "tags": []
+      }
+    ],
+    "faculty": [
+      {
+        "name": "DR. KARUNA PANDIT",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.54 PM (1).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. ASHWINI K.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.54 PM (2).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. BALASUBRAMANI R.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.54 PM.jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. ANUSHA R. SHARATH",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.55 PM (1).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. SHUBHA B.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.55 PM.jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. ANISHA P. RODRIGUES",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.58 PM.jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. SHRIVIDYA G.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.59 PM (1).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. RAJU K.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.14.59 PM.jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. PADMAVATHI K.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.00 PM (1).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. MAMATHA GIRISH",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.00 PM (2).jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. SUDEEPA K. B.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.00 PM.jpeg",
+        "roomId": "ec-staff-room-1",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. CHAITRA K.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.01 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "MRS. SOWMYA P.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.01 PM (2).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "MS. SHANKARI N.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.01 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. CHAITRA S. N.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.02 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "MR. VASUDEVA PAI",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.02 PM (2).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. DEVIDAS",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.02 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. ULLAL HARSHINI DEVI",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.03 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. SANTHOSH POOJARY",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.03 PM (2).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. KAVITHA S.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.03 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "MS. BHAVYA K.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.04 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. SNEHA NAYAK",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.04 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. VIJAYA MURARI T.",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.05 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "MS. RAMYA SHETTY",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.05 PM (2).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. RAJALAXMI HEGDE",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.05 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. CHARISHMA",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.06 PM (1).jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      },
+      {
+        "name": "DR. NIJU RAJAN",
+        "image": "/apj-block-images/3th-floor/3rd-floor staff room/WhatsApp Image 2026-04-23 at 10.15.06 PM.jpeg",
+        "roomId": "ec-staff-room-2",
+        "department": "ECE"
+      }
+    ]
+  },
+  "fourth": {
+    "rooms": [
+      {
+        "id": "staff-room-top-left",
+        "name": "STAFF ROOM",
+        "x": 35,
+        "y": 30,
+        "w": 90,
+        "h": 45,
+        "type": "staffroom",
+        "description": "Top left staff space",
+        "department": "CSE",
+        "capacity": 5,
+        "image": "/apj-block-images/4th-floor/sr1.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross the center area to the left side of the building, then turn right and walk to the very top.\nii. Stairs-2: Turn left towards the left side of the building, turn right and walk all the way up.\niii. LIFT: Turn left to the left wall, then turn right and walk all the way up.",
+        "tags": [
+          "office",
+          "staff",
+          "cse",
+          "teachers"
+        ]
+      },
+      {
+        "id": "csl-06",
+        "name": "CSL 06",
+        "x": 35,
+        "y": 95,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 06",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl06.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross over to the left side of the floor, turn right and walk past CSL 05.\nii. Stairs-2: Turn left towards the left hallway, turn right and walk straight up past the Washroom.\niii. LIFT: Turn left to the left hallway, turn right and walk past CSL 05.",
+        "tags": [
+          "lab",
+          "computer",
+          "cse",
+          "csl",
+          "6"
+        ]
+      },
+      {
+        "id": "csl-05",
+        "name": "CSL 05",
+        "x": 35,
+        "y": 155,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 05",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl05.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross over to the left area, turn right and it will be on your left.\nii. Stairs-2: Turn left to the left side, turn right and walk past the Washroom.\niii. LIFT: Turn left across the hall, then turn right and it is immediately there.",
+        "tags": [
+          "lab",
+          "computer",
+          "cse",
+          "csl",
+          "5"
+        ]
+      },
+      {
+        "id": "washroom-4",
+        "name": "WASHROOM",
+        "x": 35,
+        "y": 215,
+        "w": 90,
+        "h": 80,
+        "type": "utility",
+        "description": "Restroom facilities",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x600?text=Washroom",
+        "directions": "i. Stairs-1: Turn right and cross straight into the middle intersection, it is right there.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past the HOD.\niii. LIFT: Turn left and walk straight, the washroom is exactly in front of you.",
+        "tags": [
+          "toilet",
+          "restroom"
+        ]
+      },
+      {
+        "id": "cse-hod-cabin",
+        "name": "CSE HOD",
+        "x": 35,
+        "y": 315,
+        "w": 90,
+        "h": 80,
+        "type": "hod",
+        "description": "Head of CSE Department",
+        "department": "CSE",
+        "capacity": 5,
+        "image": "/apj-block-images/4th-floor/hod-cse.jpeg",
+        "directions": "i. Stairs-1: Turn right, walk towards the Washroom, then turn left.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past CSL 03.\niii. LIFT: Turn left, walk straight, and it is immediately on your right.",
+        "tags": [
+          "hod",
+          "head",
+          "office",
+          "cse",
+          "boss",
+          "chairman"
+        ]
+      },
+      {
+        "id": "csl-03",
+        "name": "CSL 03",
+        "x": 35,
+        "y": 450,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 03",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl03.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross towards the left side, turn left and walk past the HOD.\nii. Stairs-2: Turn left to the left hallway, and turn right to walk past CSL 04.\niii. LIFT: Turn left to the left side, then turn left to walk past the HOD.",
+        "tags": [
+          "lab",
+          "computer"
+        ]
+      },
+      {
+        "id": "csl-04",
+        "name": "CSL 04",
+        "x": 35,
+        "y": 520,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 04",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl04.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross to the left side, turn left and walk all the way down past CSL 03.\nii. Stairs-2: Turn left to the left side, and it is the first room on your left.\niii. LIFT: Turn left to the left side, turn left and walk to the very end.",
+        "tags": [
+          "lab",
+          "computer"
+        ]
+      },
+      {
+        "id": "isl-03",
+        "name": "ISL 03",
+        "x": 360,
+        "y": 95,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Information Science Lab 03",
+        "department": "ISE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/isl03.jpeg",
+        "directions": "i. Stairs-1: Turn left and walk up past ISL 02.\nii. Stairs-2: Walk straight ahead along the right side passing the middle area.\niii. LIFT: Turn right, then turn left and walk past ISL 02.",
+        "tags": [
+          "lab",
+          "ise",
+          "isl",
+          "information",
+          "3"
+        ]
+      },
+      {
+        "id": "isl-02",
+        "name": "ISL 02",
+        "x": 360,
+        "y": 155,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Information Science Lab 02",
+        "department": "ISE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/isl02.jpeg",
+        "directions": "i. Stairs-1: Turn left, and it is the very first room on your right.\nii. Stairs-2: Walk straight ahead along the right side, just past the middle intersection.\niii. LIFT: Turn right, then turn left. It is immediately on your right.",
+        "tags": [
+          "lab",
+          "ise",
+          "isl",
+          "information",
+          "2"
+        ]
+      },
+      {
+        "id": "isl-01",
+        "name": "ISL 01",
+        "x": 360,
+        "y": 450,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Information Science Lab 01",
+        "department": "ISE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/isl01.jpeg",
+        "directions": "i. Stairs-1: Turn right and walk down past the Server Room.\nii. Stairs-2: Walk straight ahead past CSL 02.\niii. LIFT: Turn right, then turn right and walk down. It is on your left.",
+        "tags": [
+          "lab",
+          "ise"
+        ]
+      },
+      {
+        "id": "csl-02",
+        "name": "CSL 02",
+        "x": 360,
+        "y": 520,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 02",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl02.jpeg",
+        "directions": "i. Stairs-1: Turn right and walk down past ISL 01.\nii. Stairs-2: Walk straight ahead. It is the first room on your right.\niii. LIFT: Turn right, then turn right and walk down past ISL 01.",
+        "tags": [
+          "lab",
+          "computer"
+        ]
+      },
+      {
+        "id": "csl-01",
+        "name": "CSL 01",
+        "x": 360,
+        "y": 600,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 01",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl01.jpeg",
+        "directions": "i. Stairs-1: Turn right and walk all the way straight down to the end.\nii. Stairs-2: Turn right, and it is immediately there on your right.\niii. LIFT: Turn right, then turn right and walk all the way down to the end.",
+        "tags": [
+          "lab",
+          "computer"
+        ]
+      },
+      {
+        "id": "corridor-4",
+        "name": "",
+        "x": 455,
+        "y": 255,
+        "w": 165,
+        "h": 180,
+        "type": "corridor",
+        "clickable": false,
+        "description": "Open corridor zone.",
+        "image": "",
+        "directions": "TBD",
+        "tags": []
+      },
+      {
+        "id": "staff-room-top-center",
+        "name": "STAFF ROOM",
+        "x": 175,
+        "y": 30,
+        "w": 140,
+        "h": 40,
+        "type": "staffroom",
+        "description": "Main staff room",
+        "department": "CSE",
+        "capacity": 15,
+        "image": "/apj-block-images/4th-floor/sr2.jpeg",
+        "directions": "i. Stairs-1: Walk forward and turn left, go all the way to the top wall, then turn left again.\nii. Stairs-2: Walk straight ahead through the entire building to the top wall, then turn left.\niii. LIFT: Turn right, walk all the way to the top, then turn left.",
+        "tags": [
+          "office",
+          "staff"
+        ],
+        "faculties": [
+          {
+            "name": "Dr. VENKATRAMANA BHAT P",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.32 PM.jpeg"
+          },
+          {
+            "name": "Dr. SHABARI SHEDTHI B",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (1).jpeg"
+          },
+          {
+            "name": "Dr. PRADEEP KANCHAN",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (2).jpeg"
+          },
+          {
+            "name": "Dr. JYOTHI SHETTY",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM.jpeg"
+          },
+          {
+            "name": "Dr. DESAI KARANAM SREEKANTHA",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (1).jpeg"
+          },
+          {
+            "name": "Dr. SANNIDHAN M S",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (2).jpeg"
+          },
+          {
+            "name": "Dr. PALLAVI K N",
+            "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM.jpeg"
+          }
+        ]
+      },
+      {
+        "id": "csl-07",
+        "name": "CSL 07",
+        "x": 360,
+        "y": 30,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Computer Science Lab 07",
+        "department": "CSE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/csl07.jpeg",
+        "directions": "i. Stairs-1: Turn left and walk straight ahead to the very end.\nii. Stairs-2: Walk straight ahead along the right side of the building all the way to the top.\niii. LIFT: Turn right, and walk straight all the way to the top.",
+        "tags": [
+          "lab",
+          "computer"
+        ]
+      },
+      {
+        "id": "staff-room-mid-left",
+        "name": "STAFF ROOM",
+        "x": 145,
+        "y": 95,
+        "w": 90,
+        "h": 40,
+        "type": "staffroom",
+        "description": "Staff room left",
+        "department": "General",
+        "capacity": 8,
+        "image": "/apj-block-images/4th-floor/sr1.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross to the left hallway, turn right to go up. It is on your right.\nii. Stairs-2: Turn left to the left hallway, turn right and walk past the Washroom. It is on your right.\niii. LIFT: Turn left to the left hallway, turn right to go up. It is on your right.",
+        "tags": [
+          "office",
+          "staff"
+        ]
+      },
+      {
+        "id": "staff-room-mid-right",
+        "name": "STAFF ROOM",
+        "x": 255,
+        "y": 95,
+        "w": 90,
+        "h": 40,
+        "type": "staffroom",
+        "description": "Staff room right",
+        "department": "General",
+        "capacity": 8,
+        "image": "/apj-block-images/4th-floor/sr2.jpeg",
+        "directions": "i. Stairs-1: Turn left and walk slightly up. It is on your left.\nii. Stairs-2: Walk straight ahead along the right hallway past the middle intersection. It is on your left.\niii. LIFT: Turn right to the right hallway, turn left to go up. It is on your left.",
+        "tags": [
+          "office",
+          "staff"
+        ]
+      },
+      {
+        "id": "stairs-top-4",
+        "name": "STAIRS-1",
+        "x": 195,
+        "y": 255,
+        "w": 90,
+        "h": 40,
+        "type": "utility",
+        "description": "Main building staircase",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "Exit to your right into the hallway.",
+        "tags": [
+          "stairs",
+          "steps"
+        ]
+      },
+      {
+        "id": "lift-4",
+        "name": "LIFT",
+        "x": 195,
+        "y": 315,
+        "w": 90,
+        "h": 40,
+        "type": "utility",
+        "description": "Building elevator",
+        "department": "Facility",
+        "capacity": 8,
+        "image": "https://placehold.co/400x220?text=Lift",
+        "directions": "Exit straight forward into the center intersection.",
+        "tags": [
+          "lift",
+          "elevator"
+        ]
+      },
+      {
+        "id": "ups-room",
+        "name": "UPS ROOM",
+        "x": 145,
+        "y": 450,
+        "w": 90,
+        "h": 40,
+        "type": "utility",
+        "description": "Power backup room",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=UPS",
+        "directions": "i. Stairs-1: Turn right, cross to the left hallway, turn left to walk down. It is on your left.\nii. Stairs-2: Turn left to the left hallway, turn right to walk up. It is on your right.\niii. LIFT: Turn left to the left hallway, turn left to walk down. It is on your left.",
+        "tags": [
+          "power",
+          "electrical"
+        ]
+      },
+      {
+        "id": "server-room",
+        "name": "SERVER ROOM",
+        "x": 255,
+        "y": 520,
+        "w": 90,
+        "h": 40,
+        "type": "utility",
+        "description": "Main server infrastructure",
+        "department": "IT",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=Server+Room",
+        "directions": "i. Stairs-1: Turn right to walk down the hallway. It is on your right.\nii. Stairs-2: Walk straight ahead along the right hallway, and it is on your left.\niii. LIFT: Turn right to the right hallway, turn right to walk down. It is on your right.",
+        "tags": [
+          "server",
+          "network",
+          "it"
+        ]
+      },
+      {
+        "id": "isl-04",
+        "name": "ISL 04",
+        "x": 35,
+        "y": 600,
+        "w": 90,
+        "h": 40,
+        "type": "lab",
+        "description": "Information Science Lab 04",
+        "department": "ISE",
+        "capacity": 40,
+        "image": "/apj-block-images/4th-floor/isl04.jpeg",
+        "directions": "i. Stairs-1: Turn right, cross to the left side, turn left and walk to the very end.\nii. Stairs-2: Turn left, and it is immediately there straight ahead on your left.\niii. LIFT: Turn left to the left side, turn left and walk to the very end.",
+        "tags": [
+          "lab",
+          "ise"
+        ]
+      },
+      {
+        "id": "stairs-bottom-4",
+        "name": "STAIRS-2",
+        "x": 195,
+        "y": 600,
+        "w": 90,
+        "h": 40,
+        "type": "utility",
+        "description": "Secondary staircase",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=Stairs",
+        "directions": "Exit straight forward into the bottom corridor.",
+        "tags": [
+          "stairs",
+          "steps"
+        ]
+      }
+    ],
+    "faculty": [
+      {
+        "name": "Dr. VENKATRAMANA BHAT P",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.32 PM.jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. SHABARI SHEDTHI B",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (1).jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. PRADEEP KANCHAN",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM (2).jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. JYOTHI SHETTY",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.33 PM.jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. DESAI KARANAM SREEKANTHA",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (1).jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. SANNIDHAN M S",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM (2).jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      },
+      {
+        "name": "Dr. PALLAVI K N",
+        "image": "/apj-block-images/4th-floor/4th-floor staff room/WhatsApp Image 2026-04-24 at 10.12.34 PM.jpeg",
+        "roomId": "staff-room-top-center",
+        "department": "CSE"
+      }
+    ]
+  },
+  "fifth": {
+    "rooms": [
+      {
+        "id": "staff-room-top",
+        "name": "STAFF ROOM",
+        "x": 190,
+        "y": 32,
+        "w": 95,
+        "h": 32,
+        "type": "staffroom",
+        "description": "Top level staff workspace.",
+        "capacity": 10,
+        "image": "https://placehold.co/400x220?text=Staff+Room+Top",
+        "directions": "TBD",
+        "tags": [
+          "office",
+          "faculty",
+          "teachers",
+          "staff",
+          "ise"
+        ]
+      },
+      {
+        "id": "lh-505",
+        "name": "LH-505",
+        "x": 35,
+        "y": 72,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-505",
+        "capacity": 60,
+        "image": "/apj-block-images/5th-floor/LH-505.jpeg",
+        "directions": "i. Stairs-1: Turn left and pass LH-504 and LH-506. Turn left through the gap between the two staff rooms, walk straight, and then turn right to reach the classroom.\nii. Stairs-2: turn left and follow along the path,pass along two staff rooms and the ISE HOD ,and LH-503 ,continue staright ahead to find LH-505\niii. LIFT: turn left.you will see the ISE HOD;turn right again to pass LH-503 continue staright ahead to find LH-505",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "505"
+        ]
+      },
+      {
+        "id": "lh-503",
+        "name": "LH-503",
+        "x": 35,
+        "y": 168,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-503",
+        "capacity": 60,
+        "image": "/apj-block-images/5th-floor/lh503.png",
+        "directions": "i. Stairs-1: Turn right and then turn right again. You will see the ISE HOD straight ahead; walk towards it and then turn left to reach LH-503.\nii. Stairs-2: Turn left and then turn right. Walk along the two staff rooms and the ISE HOD; LH-503 is located immediately after the ISE HOD.\niii. LIFT: Turn left and then turn right again to reach the LH-503 classroom.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "503"
+        ]
+      },
+      {
+        "id": "washroom",
+        "name": "WASHROOM",
+        "x": 35,
+        "y": 245,
+        "w": 105,
+        "h": 38,
+        "type": "utility",
+        "description": "Restroom facilities.",
+        "faculty": "",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x600?text=Washroom",
+        "directions": "TBD",
+        "tags": [
+          "toilet",
+          "restroom",
+          "loo",
+          "bathroom"
+        ]
+      },
+      {
+        "id": "hod-cabin",
+        "name": "ISE HOD",
+        "x": 35,
+        "y": 300,
+        "w": 105,
+        "h": 80,
+        "type": "hod",
+        "description": "HOD of ISE",
+        "department": "ISE",
+        "capacity": 0,
+        "image": "/apj-block-images/5th-floor/HOD_CABIN(ISE).jpeg",
+        "directions": "i. Stairs-1: Turn right and then turn right again. Look straight ahead to find the ISE HOD.\nii. Stairs-2: Turn left and then turn right. Pass along the two staff rooms; the ISE HOD will be directly ahead.\niii. LIFT: Turn left to find the ISE HOD exactly in front of you.",
+        "tags": [
+          "head",
+          "boss",
+          "office",
+          "ise",
+          "hod"
+        ]
+      },
+      {
+        "id": "staff-room-left",
+        "name": "STAFF ROOM",
+        "x": 35,
+        "y": 448,
+        "w": 75,
+        "h": 55,
+        "type": "staffroom",
+        "description": "Auxiliary staff room for department faculty.",
+        "department": "Computer Science",
+        "capacity": 8,
+        "image": "https://placehold.co/400x220?text=Staff+Room+Left",
+        "directions": "TBD",
+        "tags": [
+          "office",
+          "teachers"
+        ]
+      },
+      {
+        "id": "lab",
+        "name": "CSL08",
+        "x": 35,
+        "y": 568,
+        "w": 75,
+        "h": 40,
+        "type": "lab",
+        "description": "CSL08 lab",
+        "department": "CSE",
+        "capacity": 30,
+        "image": "/apj-block-images/5th-floor/csl08.png",
+        "directions": "i. Stairs-1: Turn right and pass along LH-502 and LH-500. Continue past Stairs-2; CSL08 is located immediately next to the Library.\nii. Stairs-2: Turn left and pass the Library; CSL08 is located immediately next to the Library.\niii. LIFT: Turn right and then turn right again. Pass along LH-502 and LH-500, continue past Stairs-2 and the Library; CSL08 is located immediately ahead.",
+        "tags": [
+          "computer",
+          "practical",
+          "research",
+          "lab",
+          "laboratory",
+          "cse",
+          "csl"
+        ]
+      },
+      {
+        "id": "lh-506",
+        "name": "LH-506",
+        "x": 360,
+        "y": 72,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-506",
+        "capacity": 60,
+        "image": "/apj-block-images/5th-floor/LH-506.jpeg",
+        "directions": "i. Stairs-1: Turn left and pass along LH-504; LH-506 is the next classroom straight ahead.\nii. Stairs-2: Turn right and pass along LH-500, LH-502, and LH-504; LH-506 is the next classroom straight ahead.\niii. LIFT: Turn right and then turn left. Pass along LH-504; LH-506 is the next classroom straight ahead.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "506"
+        ]
+      },
+      {
+        "id": "lh-504",
+        "name": "LH-504",
+        "x": 360,
+        "y": 168,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-504",
+        "faculty": "",
+        "department": "ISE",
+        "capacity": 60,
+        "image": "/apj-block-images/5th-floor/lh504.png",
+        "directions": "i. Stairs-1: Turn right and then turn left to reach the classroom immediately.\nii. Stairs-2: Turn right and then turn left. Pass LH-500 and LH-502; LH-504 is the next classroom straight ahead.\niii. LIFT: Turn right and then turn left to reach the classroom.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "504"
+        ]
+      },
+      {
+        "id": "lh-502",
+        "name": "LH-502",
+        "x": 360,
+        "y": 448,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-502",
+        "faculty": "",
+        "department": "ISE",
+        "capacity": 50,
+        "image": "/apj-block-images/5th-floor/lh502.jpg",
+        "directions": "i. Stairs-1: Turn right and walk forward to find LH-502; LH-501 is on the opposite side.\nii. Stairs-2: Turn right and then turn left to reach LH-502; LH-501 is on the opposite side.\niii. LIFT: Turn right and then turn right again to find LH-502; LH-501 is on the opposite side.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "502"
+        ]
+      },
+      {
+        "id": "lh-500",
+        "name": "LH-500",
+        "x": 360,
+        "y": 536,
+        "w": 90,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-500",
+        "faculty": "",
+        "department": "ISE",
+        "capacity": 60,
+        "image": "/apj-block-images/5th-floor/lh500.png",
+        "directions": "• From Stairs-1 or LIFT: Turn right, walk straight, and pass LH-502.\n• From Stairs-2: Turn right to reach the classroom immediately.",
+        "tags": [
+          "class",
+          "lecture",
+          "cr",
+          "lh",
+          "ise",
+          "500"
+        ]
+      },
+      {
+        "id": "staff-room-big",
+        "name": "STAFF ROOM",
+        "x": 190,
+        "y": 100,
+        "w": 95,
+        "h": 80,
+        "type": "staffroom",
+        "description": "Main staff lounge and workspace.",
+        "department": "Core Engineering",
+        "capacity": 15,
+        "images": [
+          "/apj-block-images/5th-floor/SF(i).jpeg",
+          "/apj-block-images/5th-floor/SF(ii).jpeg"
+        ],
+        "footerImage": "/apj-block-images/5th-floor/SF(i).jpeg",
+        "directions": "TBD",
+        "tags": [
+          "office",
+          "teachers",
+          "staff",
+          "ise",
+          "lounge"
+        ]
+      },
+      {
+        "id": "stairs-top",
+        "name": "Stairs-1",
+        "x": 190,
+        "y": 272,
+        "w": 95,
+        "h": 32,
+        "type": "utility",
+        "description": "Main building staircase (Upper).",
+        "faculty": "N/A",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=Stairs+Top",
+        "directions": "1. Turn right.\n2. Walk straight.\n3. Pass from LIFT and LH-502.\n4. Reach LH-500.",
+        "tags": [
+          "exit",
+          "emergency",
+          "steps"
+        ]
+      },
+      {
+        "id": "lift",
+        "name": "LIFT",
+        "x": 190,
+        "y": 362,
+        "w": 95,
+        "h": 32,
+        "type": "utility",
+        "description": "Building elevator access.",
+        "faculty": "N/A",
+        "department": "Facility",
+        "capacity": 8,
+        "image": "https://placehold.co/400x220?text=Lift",
+        "directions": "1. Exit and turn right.\n2. Walk straight and pass LH-502.\n3. LH-500 will be ahead.",
+        "tags": [
+          "elevator",
+          "floor up",
+          "floor down"
+        ]
+      },
+      {
+        "id": "lh-501",
+        "name": "LH-501",
+        "x": 215,
+        "y": 448,
+        "w": 85,
+        "h": 38,
+        "type": "classroom",
+        "description": "LH-501",
+        "faculty": "",
+        "department": "",
+        "capacity": 20,
+        "image": "/apj-block-images/5th-floor/lh501_pg.png",
+        "directions": "i. Stairs-1: Turn right and walk forward to find LH-502; LH-501 is on the opposite side.\nii. Stairs-2: Turn right and then turn left to reach LH-502; LH-501 is on the opposite side.\niii. LIFT: Turn right and then turn right again to find LH-502; LH-501 is on the opposite side.",
+        "tags": [
+          "class",
+          "lecture",
+          "pg",
+          "lh",
+          "501"
+        ]
+      },
+      {
+        "id": "library",
+        "name": "LIBRARY",
+        "x": 95,
+        "y": 600,
+        "w": 105,
+        "h": 32,
+        "type": "utility",
+        "description": "CSE Department Library",
+        "department": "CSE",
+        "capacity": "5-10",
+        "image": "/apj-block-images/5th-floor/library.jpg",
+        "directions": "i. Stairs-1: Turn right and pass along LH-502 and LH-500; the Library is located beside Stairs-2.\nii. Stairs-2: Turn sharp left to reach the Library.\niii. LIFT: Turn right and then turn right again. Pass along LH-502 and LH-500; the Library is located beside Stairs-2.",
+        "tags": [
+          "books",
+          "study",
+          "quiet"
+        ]
+      },
+      {
+        "id": "stairs-bottom",
+        "name": "STAIRS-2",
+        "x": 215,
+        "y": 600,
+        "w": 110,
+        "h": 32,
+        "type": "utility",
+        "description": "Main building staircase (Lower).",
+        "faculty": "N/A",
+        "department": "Facility",
+        "capacity": 0,
+        "image": "https://placehold.co/400x220?text=Stairs+Bottom",
+        "directions": "1. Turn right.\n2. Reach LH-500 immediately.",
+        "tags": [
+          "exit",
+          "steps"
+        ]
+      },
+      {
+        "id": "cfr03-lab",
+        "name": "CFR03",
+        "x": 360,
+        "y": 600,
+        "w": 90,
+        "h": 32,
+        "type": "lab",
+        "description": "Computer Research Lab (CFR03)",
+        "department": "CSE",
+        "image": "/apj-block-images/5th-floor/cfr03_lab.png",
+        "directions": "i. Stairs-1: Turn right and pass along LH-502 and LH-500. The CFR03 Lab is located right beside the LH-500 classroom.\nii. Stairs-2: Turn right to find the Lab immediately beside LH-500.\niii. LIFT: Turn right and then turn right again. Pass along LH-502 and LH-500; the CFR03 Lab is located right beside LH-500.",
+        "tags": [
+          "lab",
+          "research",
+          "computer",
+          "cse",
+          "cfr"
+        ]
+      },
+      {
+        "id": "corridor",
+        "name": "",
+        "x": 455,
+        "y": 255,
+        "w": 165,
+        "h": 180,
+        "type": "corridor",
+        "clickable": false,
+        "description": "Open corridor zone.",
+        "faculty": "N/A",
+        "department": "N/A",
+        "capacity": 0,
+        "image": "",
+        "directions": "TBD",
+        "tags": []
+      }
+    ],
+    "faculty": [
+      {
+        "name": "DR. RAVI B.",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.15 PM (1).jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. JASON ELROY MARTIS",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.15 PM (2).jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. ASHWINI B.",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.15 PM.jpeg",
+        "roomId": "hod-cabin",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. ANUSHA N.",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.16 PM.jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. CHINMAI SHETTY",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.18 PM.jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. DEEPA",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.19 PM (1).jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. RAGHUNANDAN K R",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.19 PM (2).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "DR. RASHMI NAVEEN",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.19 PM.jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "MR. PAWAN HEGDE",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.20 PM (1).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "MS. SAVITHA SHETTY",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.20 PM (2).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "DR. SARIKA HEGDE",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.20 PM.jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "MS. ANUPAMA HC",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.21 PM (1).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "MS. PRATHEEKSHA HEGDE N",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.21 PM (2).jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "DR. ASMITA POOJARY",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.21 PM.jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "MS. VAISHALI BANGERA",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.22 PM (1).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "DR. SANDEEP KUMAR HEGDE",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.22 PM (2).jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      },
+      {
+        "name": "MS. PRATHYAKSHINI",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.22 PM.jpeg",
+        "roomId": "staff-room-big",
+        "department": "ISE"
+      },
+      {
+        "name": "MS. SIMRAN BANU",
+        "image": "/apj-block-images/5th-floor/5th-floor staff room/WhatsApp Image 2026-04-23 at 10.27.23 PM.jpeg",
+        "roomId": "staff-room-left",
+        "department": "CSE"
+      }
+    ]
+  }
+}

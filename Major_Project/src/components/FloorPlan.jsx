@@ -8,6 +8,7 @@ import RoomModal from './RoomModal'
 import FacultyProfileModal from './FacultyProfileModal'
 import FacultyDirectoryModal from './FacultyDirectoryModal'
 import SearchSystem from './SearchSystem'
+import sharedLayouts from '../data/layouts.json'
 
 // --- GLOBAL SAFETY UTILITY ---
 const SafeComponent = (Component, props) => {
@@ -85,10 +86,20 @@ export default function FloorPlan() {
             setFaculty(data.faculty || []);
             if (data.mapImage) setMapImage(data.mapImage);
             setIsLocked(false);
+            return;
           }
         } catch (e) {
           console.error("Corrupted layout in storage:", e);
         }
+      }
+
+      // STAGE 0: GLOBAL SHARED FALLBACK (NEW)
+      // This ensures any new user sees the layout saved in layouts.json
+      const shared = sharedLayouts[floorId];
+      if (shared && isValidLayout(shared)) {
+        setRooms(shared.rooms || []);
+        setFaculty(shared.faculty || []);
+        setIsLocked(true); // Default to locked for shared data
       } else {
         // EMPTY INITIAL STATE (SAFE START)
         setRooms([]);
@@ -169,7 +180,30 @@ export default function FloorPlan() {
       console.error("Save Error:", err);
       setSaveStatus('idle');
     }
+
+    // DEVELOPER TIP:
+    // To update the GITHUB shared layout (layouts.json):
+    // 1. Run 'window.exportLayout()' in the console.
+    // 2. Copy the output.
+    // 3. Paste it into 'src/data/layouts.json'.
+    // 4. Push to GitHub.
   };
+
+  /**
+   * STAGE 6: GLOBAL EXPORT (FOR DEVELOPERS)
+   */
+  useEffect(() => {
+    window.exportLayout = () => {
+      const fullLayout = {
+        rooms: rooms,
+        faculty: faculty
+      };
+      console.log("--- START GLOBAL LAYOUT EXPORT ---");
+      console.log(JSON.stringify(fullLayout, null, 2));
+      console.log("--- END GLOBAL LAYOUT EXPORT ---");
+      alert("Layout exported to Console. Copy it to layouts.json for global sharing.");
+    };
+  }, [rooms, faculty]);
 
   const handleEditUnlock = async () => {
     try {

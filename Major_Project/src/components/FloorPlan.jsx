@@ -637,7 +637,7 @@ export default function FloorPlan() {
                 if (room.type === 'staffroom') {
                   setIsFacultyModalOpen(true);
                 } else {
-                  setSelectedRoom(room);
+                  navigate(`?room=${room.id}`);
                 }
               }}
               onBoundaryChange={undefined}

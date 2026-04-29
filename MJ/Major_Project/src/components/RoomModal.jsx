@@ -1,8 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, User, Building, Users, Info, ChevronLeft, ChevronRight, Edit3, Save } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function RoomModal({ room, onClose, onUpdateRoomData }) {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isEditing, setIsEditing] = useState(false)
   const [editedDirections, setEditedDirections] = useState('')
@@ -118,7 +121,18 @@ export default function RoomModal({ room, onClose, onUpdateRoomData }) {
               <InfoSection label="Description" value={room.description} />
               
               <div className="grid grid-cols-2 gap-8">
-                {room.faculty && <InfoSection label="Personnel" value={room.faculty} />}
+                {room.faculty && (
+                  <InfoSection 
+                    label="Personnel" 
+                    value={room.faculty} 
+                    isFaculty={true}
+                    onViewProfile={() => {
+                      const searchParams = new URLSearchParams(location.search);
+                      searchParams.set('faculty', room.faculty);
+                      navigate(`${location.pathname}?${searchParams.toString()}`);
+                    }}
+                  />
+                )}
                 {room.department && <InfoSection label="Affiliation" value={room.department} />}
               </div>
 
@@ -227,14 +241,25 @@ function DirectionDisplay({ value }) {
   );
 }
 
-function InfoSection({ label, value }) {
+function InfoSection({ label, value, isFaculty, onViewProfile }) {
   const renderValue = () => {
     if (!value || value === 'TBD') return 'Not specified';
     
     return (
-      <p className="leading-relaxed text-sm font-bold text-black dark:text-white">
-        {value}
-      </p>
+      <div className="flex flex-col gap-2">
+        <p className="leading-relaxed text-sm font-bold text-black dark:text-white">
+          {value}
+        </p>
+        {isFaculty && onViewProfile && (
+          <button 
+            onClick={onViewProfile}
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500 border border-blue-500/20 hover:border-blue-500 text-blue-500 hover:text-white rounded-lg transition-all duration-300 w-fit group"
+          >
+            <User className="w-3 h-3 group-hover:scale-110 transition-transform" />
+            <span className="text-[9px] font-orbitron font-black uppercase tracking-widest">View Profile</span>
+          </button>
+        )}
+      </div>
     );
   };
 

@@ -165,7 +165,7 @@ body {
 */
 .floor-fourth .box-label,
 .floor-fifth .box-label {
-  font-size: 14px !important;
+  font-size: 30px !important;
 }
 
 .coord-label {
@@ -209,4 +209,13 @@ body {
   padding: 4px 10px !important;
   border-radius: 6px !important;
   border-width: 1.5px !important;
+}
+
+.floor-fourth .coord-label,
+.floor-fifth .coord-label {
+  font-size: 26px !important;
+  top: -48px !important;
+  padding: 5px 12px !important;
+  border-radius: 8px !important;
+  border-width: 2px !important;
 }

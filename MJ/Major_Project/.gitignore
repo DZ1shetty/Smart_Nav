@@ -5,5 +5,4 @@ data/layouts/*.json
 data/logs/*.log
 !data/layouts/.gitkeep
 !data/logs/.gitkeep
-serviceAccountKey.json
-OLD_LOCAL_DATA/
+serviceAccountKey.json

@@ -87,58 +87,43 @@ export default function FacultyProfileModal({ faculty, onClose }) {
               </div>
             </div>
 
-              <div className="flex flex-wrap gap-3">
-                <div className="p-6 bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-xl flex-1 min-w-[200px]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Navigation className="w-3 h-3 text-blue-500" />
-                    <span className="text-[9px] font-orbitron font-black uppercase tracking-widest text-black/40 dark:text-white/20">Location Details</span>
-                  </div>
-                  <div className="text-[13px] font-black text-black dark:text-white leading-relaxed tracking-tight">
-                    {(() => {
-                      if (!directions || directions === 'TBD') return 'Located in the department staff room.';
-                      
-                      let items = directions.split('\n').map(item => item.trim()).filter(item => item);
-                      
-                      if (items.length === 1) {
-                        items = directions.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
-                          .map(item => item.trim())
-                          .filter(item => item);
-                      }
-                      
-                      if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(directions.trim())) {
-                        return (
-                          <ul className="space-y-2">
-                            {items.map((item, idx) => (
-                              <li key={idx} className="flex gap-2 items-start">
-                                <span className="flex-1 tracking-tight">
-                                  {item.trim()}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        );
-                      }
-                      
-                      return directions;
-                    })()}
-                  </div>
-                </div>
-
-                {faculty.originalRoom && (
-                  <button 
-                    onClick={() => {
-                      const searchParams = new URLSearchParams(window.location.search);
-                      searchParams.set('room', faculty.originalRoom.id);
-                      searchParams.delete('faculty');
-                      window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
-                    }}
-                    className="flex flex-col items-center justify-center p-6 bg-blue-500/10 hover:bg-blue-500 border border-blue-500/20 hover:border-blue-500 text-blue-500 hover:text-white rounded-xl transition-all duration-300 group min-w-[120px]"
-                  >
-                    <Building2 className="w-6 h-6 mb-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-[9px] font-orbitron font-black uppercase tracking-widest text-center">View Cabin<br/>Details</span>
-                  </button>
-                )}
+            <div className="p-6 bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-xl mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Navigation className="w-3 h-3 text-blue-500" />
+                <span className="text-[9px] font-orbitron font-black uppercase tracking-widest text-black/40 dark:text-white/20">Location Details</span>
               </div>
+              <div className="text-[13px] font-black text-black dark:text-white leading-relaxed tracking-tight">
+                {(() => {
+                  if (!directions || directions === 'TBD') return 'Located in the department staff room.';
+                  
+                  // Split primarily by newlines
+                  let items = directions.split('\n').map(item => item.trim()).filter(item => item);
+                  
+                  // If still one block, try splitting by patterns but more carefully
+                  if (items.length === 1) {
+                    items = directions.split(/(?=[a-z]\)\s|(?:\s|^)(?:[ivx]+\.\s|\d+\.\s|•\s))/i)
+                      .map(item => item.trim())
+                      .filter(item => item);
+                  }
+                  
+                  if (items.length > 1 || /^[ivx]+\.|^[a-z]\)|^\d+\.|^•/i.test(directions.trim())) {
+                    return (
+                      <ul className="space-y-2">
+                        {items.map((item, idx) => (
+                          <li key={idx} className="flex gap-2 items-start">
+                            <span className="flex-1 tracking-tight">
+                              {item.trim()}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  
+                  return directions;
+                })()}
+              </div>
+            </div>
 
           </div>
         </motion.div>

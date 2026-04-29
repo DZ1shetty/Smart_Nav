@@ -15,19 +15,19 @@ const GITHUB_BRANCH = "main";
 export const IS_CLOUD = true;
 
 // --- DYNAMIC BASE URL ---
-export const IMG_BASE_URL = IS_CLOUD
+export const IMG_BASE_URL = IS_CLOUD 
   ? `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}@${GITHUB_BRANCH}/MJ/Major_Project/OLD_LOCAL_DATA/public-backup`
   : ""; // Empty string resolves to local root in Vite (e.g. /apj-block-images)
 
 // --- FIREBASE CLIENT CONFIG (REQUIRED FOR STAGE 4) ---
-// Please provide these values to enable real-time sync via onSnapshot.
+// These values are now loaded from the .env file for security.
 export const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAzn2ygzi16COsTnqR574v4mwQZWk3KDSQ",
-  authDomain: "smart-nav-44e26.firebaseapp.com",
-  projectId: "smart-nav-44e26",
-  storageBucket: "smart-nav-44e26.firebasestorage.app",
-  messagingSenderId: "578251255293",
-  appId: "1:578251255293:web:271a9891d17686f53f7d94"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 console.log(`[SmartNav Config] Using ${IS_CLOUD ? 'CLOUD' : 'LOCAL'} image source: ${IMG_BASE_URL || 'Local public/'}`);

@@ -36,8 +36,8 @@ export const fourth = {
     { name: "DR. VENKATRAMANA BHAT P", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.32-pm.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
     { name: "DR. JYOTHI SHETTY", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.33-pm.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
     { name: "DR. SHABARI SHEDTHI B", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.33-pm-1.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
-    { name: "DR. PALLAVI K N", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.33-pm-2.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
-    { name: "DR. PRADEEP KANCHAN", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.34-pm.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
+    { name: "DR. PALLAVI K N", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.34-pm.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
+    { name: "DR. PRADEEP KANCHAN", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.33-pm-2.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
     { name: "DR. DESAI KARANAM SREEKANTHA", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.34-pm-1.jpeg`, roomId: "staff-room-top-center", department: "CSE" },
     { name: "DR. SANNIDHAN M S", image: `${IMG_BASE_URL}/apj-block-images/4th-floor/4th-floor-staff-room/whatsapp-image-2026-04-24-at-10.12.34-pm-2.jpeg`, roomId: "staff-room-top-center", department: "CSE" }
   ]

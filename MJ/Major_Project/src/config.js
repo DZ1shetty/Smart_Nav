@@ -12,11 +12,11 @@ const GITHUB_BRANCH = "main";
 
 // SET THIS TO 'true' to use GitHub as a Cloud CDN.
 // SET THIS TO 'false' to use your local public/ folder.
-export const IS_CLOUD = false;
+export const IS_CLOUD = true;
 
 // --- DYNAMIC BASE URL ---
 export const IMG_BASE_URL = IS_CLOUD 
-  ? `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/Major_Project/public`
+  ? `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/MJ/Major_Project/public`
   : ""; // Empty string resolves to local root in Vite (e.g. /apj-block-images)
 
 console.log(`[SmartNav Config] Using ${IS_CLOUD ? 'CLOUD' : 'LOCAL'} image source: ${IMG_BASE_URL || 'Local public/'}`);

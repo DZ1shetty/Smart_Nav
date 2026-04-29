@@ -57,78 +57,70 @@ export default function FloorPlan() {
    * Prevents undefined layout on floor switch and handles first-time loads.
    */
   useEffect(() => {
-    async function loadLayout() {
-      // Try API first
-      try {
-        const res = await fetch(`/api/layout/${floorId}`);
-        if (res.ok) {
-          const data = await res.json();
-          // Only use API data if it has valid rooms
-          if (isValidLayout(data) && data.rooms && data.rooms.length > 0) {
-            setRooms(data.rooms);
-            setFaculty(data.faculty || []);
-            if (data.mapImage) setMapImage(data.mapImage);
-            setIsLocked(data.locked !== false);
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn("API load unavailable, checking localStorage...");
-      }
-
-      // STAGE 1: LOCAL FALLBACK
-      const saved = localStorage.getItem(`layout_${floorId}`);
-      if (saved) {
-        try {
-          const data = JSON.parse(saved);
-          if (isValidLayout(data)) {
-            setRooms(data.rooms);
-            setFaculty(data.faculty || []);
-            if (data.mapImage) setMapImage(data.mapImage);
-            setIsLocked(false);
-            return;
-          }
-        } catch (e) {
-          console.error("Corrupted layout in storage:", e);
-        }
-      }
-
-      // STAGE 2: STATIC DATA FALLBACK (Final)
+    const loadLayout = async () => {
       const staticData = floorsData[floorId];
-      if (staticData) {
-        setRooms(staticData.rooms || []);
-        setFaculty(staticData.faculty || []);
-        setMapImage(staticData.mapImage || null);
-        setIsLocked(true); // Keep locked by default for static data
-      } else {
-        // EMPTY INITIAL STATE (SAFE START)
+      if (!staticData) {
         setRooms([]);
         setFaculty([]);
         setMapImage(null);
         setIsLocked(false);
+        return;
       }
-    }
+
+      // Base rooms from static data
+      let finalRooms = [...(staticData.rooms || [])];
+      let finalFaculty = [...(staticData.faculty || [])];
+      let finalMapImage = staticData.mapImage || null;
+      let finalLocked = true;
+
+      // Try to load saved positions (API then LocalStorage)
+      let savedData = null;
+      try {
+        const res = await fetch(`/api/layout/${floorId}`);
+        if (res.ok) {
+          savedData = await res.json();
+        }
+      } catch (err) {
+        const saved = localStorage.getItem(`layout_${floorId}`);
+        if (saved) {
+          try {
+            savedData = JSON.parse(saved);
+          } catch (e) {}
+        }
+      }
+
+      if (savedData && (savedData.rooms || Array.isArray(savedData))) {
+        const savedRooms = Array.isArray(savedData) ? savedData : (savedData.rooms || []);
+        finalRooms = finalRooms.map(staticRoom => {
+          const savedRoom = savedRooms.find(r => r.id === staticRoom.id);
+          if (!savedRoom) return staticRoom;
+          return {
+            ...staticRoom,
+            x: savedRoom.x ?? staticRoom.x,
+            y: savedRoom.y ?? staticRoom.y,
+            w: savedRoom.w ?? savedRoom.width ?? staticRoom.w,
+            h: savedRoom.h ?? savedRoom.height ?? staticRoom.h,
+            directions: savedRoom.directions || staticRoom.directions
+          };
+        });
+        if (savedData.faculty) finalFaculty = savedData.faculty;
+        if (savedData.mapImage) finalMapImage = savedData.mapImage;
+        finalLocked = savedData.locked !== false;
+      }
+
+      setRooms(finalRooms);
+      setFaculty(finalFaculty);
+      setMapImage(finalMapImage);
+      setIsLocked(finalLocked);
+    };
 
     loadLayout();
   }, [floorId]);
 
-  // Merge loaded room positions with static data (for metadata)
+  // Clean rooms with basic metadata
   const roomsWithMetadata = useMemo(() => {
-    const staticFloor = floorsData[floorId] || {};
-    const staticRooms = staticFloor.rooms || [];
-    
-    return rooms.map(savedRoom => {
-      const metadata = staticRooms.find(r => r.id === savedRoom.id) || {};
-      return { 
-        ...metadata, 
-        ...savedRoom,
-        // PRESERVE STATIC DIRECTIONS IF SAVED ONES ARE EMPTY OR MISSING
-        directions: (savedRoom.directions && savedRoom.directions.length > 0 && savedRoom.directions !== "TBD") 
-          ? savedRoom.directions 
-          : (metadata.directions || "TBD")
-      };
-    });
-  }, [rooms, floorId]);
+    return rooms; // Already merged in useEffect
+  }, [rooms]);
 
   /**
    * STAGE 2: SAFE SAVE OPERATION
@@ -219,20 +211,15 @@ export default function FloorPlan() {
   };
 
   const handleResetDefault = () => {
-    const saved = localStorage.getItem(`layout_${floorId}`);
-    if (!saved) {
-      alert("No saved layout found to restore.");
-      return;
-    }
-    try {
-      const data = JSON.parse(saved);
-      if (isValidLayout(data)) {
-        setRooms(data.rooms);
-        setFaculty(data.faculty || []);
-        if (data.mapImage) setMapImage(data.mapImage);
-      }
-    } catch (e) {
-      console.error("Corrupted layout data", e);
+    if (!window.confirm("Reset this floor to original static layout? Current edits will be lost.")) return;
+    const staticData = floorsData[floorId];
+    if (staticData) {
+      setRooms(staticData.rooms || []);
+      setFaculty(staticData.faculty || []);
+      setMapImage(staticData.mapImage || null);
+      localStorage.removeItem(`layout_${floorId}`); // Clear cache to force clean start
+      setIsLocked(true);
+      alert("Layout reset to static defaults.");
     }
   };
 

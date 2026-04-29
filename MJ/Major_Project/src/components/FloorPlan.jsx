@@ -474,7 +474,7 @@ export default function FloorPlan() {
                 onRoomMove={handleRoomMove} onRoomResize={handleRoomResize} onBoundaryChange={handleBoundaryChange}
                 onRoomClick={(room) => {
                   if (room.clickable === false) return;
-                  if (room.type === 'staffroom') setIsFacultyModalOpen(true);
+                  if (room.type === 'staffroom' || room.type === 'hod') setIsFacultyModalOpen(true);
                   else navigate(`?room=${room.id}`);
                 }}
               />

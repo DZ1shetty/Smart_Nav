@@ -19,4 +19,15 @@ export const IMG_BASE_URL = IS_CLOUD
   ? `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}@${GITHUB_BRANCH}/MJ/Major_Project/OLD_LOCAL_DATA/public-backup`
   : ""; // Empty string resolves to local root in Vite (e.g. /apj-block-images)
 
+// --- FIREBASE CLIENT CONFIG (REQUIRED FOR STAGE 4) ---
+// Please provide these values to enable real-time sync via onSnapshot.
+export const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "smart-nav-44e26.firebaseapp.com",
+  projectId: "smart-nav-44e26",
+  storageBucket: "smart-nav-44e26.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
 console.log(`[SmartNav Config] Using ${IS_CLOUD ? 'CLOUD' : 'LOCAL'} image source: ${IMG_BASE_URL || 'Local public/'}`);

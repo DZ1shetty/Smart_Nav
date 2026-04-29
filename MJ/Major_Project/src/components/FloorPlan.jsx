@@ -8,6 +8,8 @@ import RoomModal from './RoomModal'
 import FacultyProfileModal from './FacultyProfileModal'
 import FacultyDirectoryModal from './FacultyDirectoryModal'
 import SearchSystem from './SearchSystem'
+import { db } from '../firebase'
+import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore'
 
 // --- GLOBAL SAFETY UTILITY ---
 const SafeComponent = (Component, props) => {
@@ -53,68 +55,43 @@ export default function FloorPlan() {
   const [mapImage, setMapImage] = useState(null);
 
   /**
-   * STAGE 5: MULTI-FLOOR ISOLATION (SAFE SWITCHING)
-   * Prevents undefined layout on floor switch and handles first-time loads.
+   * STAGE 4: AUTO LOAD (CRITICAL FOR ALL USERS)
+   * Firestore is now the SINGLE SOURCE OF TRUTH.
+   * RESET -> Loads LAST SAVED from Firestore.
    */
   useEffect(() => {
-    const loadLayout = async () => {
-      const staticData = floorsData[floorId];
-      if (!staticData) {
-        setRooms([]);
-        setFaculty([]);
-        setMapImage(null);
-        setIsLocked(false);
-        return;
-      }
+    // Map floorId (e.g., 'fifth') to document name (e.g., 'Fifth-Floor')
+    const docName = floorId.charAt(0).toUpperCase() + floorId.slice(1) + "-Floor";
+    const docRef = doc(db, "layouts", docName);
 
-      // Base rooms from static data
-      let finalRooms = [...(staticData.rooms || [])];
-      let finalFaculty = [...(staticData.faculty || [])];
-      let finalMapImage = staticData.mapImage || null;
-      let finalLocked = true;
+    console.log(`[Firestore] Subscribing to: ${docName}`);
 
-      // Try to load saved positions (API then LocalStorage)
-      let savedData = null;
-      try {
-        const res = await fetch(`/api/layout/${floorId}`);
-        if (res.ok) {
-          savedData = await res.json();
-        }
-      } catch (err) {
-        const saved = localStorage.getItem(`layout_${floorId}`);
-        if (saved) {
-          try {
-            savedData = JSON.parse(saved);
-          } catch (e) {}
+    const unsub = onSnapshot(docRef, (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        console.log(`[Firestore] New data received for ${docName}:`, data);
+        
+        // STAGE 3 & 4: Load EVERYTHING from Firestore
+        if (data.rooms) setRooms(data.rooms);
+        if (data.faculty) setFaculty(data.faculty);
+        if (data.mapImage) setMapImage(data.mapImage);
+        setIsLocked(data.locked !== false);
+      } else {
+        console.warn(`[Firestore] Document ${docName} does not exist. Falling back to static data.`);
+        // ONLY fall back if Firestore is completely empty for this floor
+        const staticData = floorsData[floorId];
+        if (staticData) {
+          setRooms(staticData.rooms || []);
+          setFaculty(staticData.faculty || []);
+          setMapImage(staticData.mapImage || null);
+          setIsLocked(true);
         }
       }
+    }, (error) => {
+      console.error("[Firestore] Snapshot error:", error);
+    });
 
-      if (savedData && (savedData.rooms || Array.isArray(savedData))) {
-        const savedRooms = Array.isArray(savedData) ? savedData : (savedData.rooms || []);
-        finalRooms = finalRooms.map(staticRoom => {
-          const savedRoom = savedRooms.find(r => r.id === staticRoom.id);
-          if (!savedRoom) return staticRoom;
-          return {
-            ...staticRoom,
-            x: savedRoom.x ?? staticRoom.x,
-            y: savedRoom.y ?? staticRoom.y,
-            w: savedRoom.w ?? savedRoom.width ?? staticRoom.w,
-            h: savedRoom.h ?? savedRoom.height ?? staticRoom.h,
-            directions: savedRoom.directions || staticRoom.directions
-          };
-        });
-        if (savedData.faculty) finalFaculty = savedData.faculty;
-        if (savedData.mapImage) finalMapImage = savedData.mapImage;
-        finalLocked = savedData.locked !== false;
-      }
-
-      setRooms(finalRooms);
-      setFaculty(finalFaculty);
-      setMapImage(finalMapImage);
-      setIsLocked(finalLocked);
-    };
-
-    loadLayout();
+    return () => unsub();
   }, [floorId]);
 
   // Clean rooms with basic metadata
@@ -123,10 +100,11 @@ export default function FloorPlan() {
   }, [rooms]);
 
   /**
-   * STAGE 2: SAFE SAVE OPERATION
+   * STAGE 2: SAVE = OVERWRITE DEFAULT (CRITICAL)
+   * Guaranteed overwrite to Firestore.
    */
   const onSave = async (roomsOverride = null, facultyOverride = null) => {
-    const targetRooms = (roomsOverride && Array.isArray(roomsOverride)) ? roomsOverride : roomsWithMetadata;
+    const targetRooms = (roomsOverride && Array.isArray(roomsOverride)) ? roomsOverride : rooms;
     const targetFaculty = (facultyOverride && Array.isArray(facultyOverride)) ? facultyOverride : faculty;
 
     if (!isValidLayout(targetRooms)) {
@@ -137,46 +115,48 @@ export default function FloorPlan() {
 
     setSaveStatus('saving');
     
+    // STAGE 6: PIXEL-ACCURATE DATA PREPARATION
     const cleanRooms = targetRooms.map(room => ({
       id: room.id,
+      name: room.name || room.label,
       label: room.name || room.label,
+      type: room.type,
       x: Math.round(room.x ?? 0),
       y: Math.round(room.y ?? 0),
       w: Math.round(room.w || room.width || 0),
       h: Math.round(room.h || room.height || 0),
       width: Math.round(room.w || room.width || 0),
       height: Math.round(room.h || room.height || 0),
-      floor: floorId,
-      directions: room.directions || ''
+      directions: room.directions || '',
+      image: room.image || '',
+      tags: room.tags || [],
+      clickable: room.clickable !== false
     }));
 
     try {
-      const res = await fetch(`/api/layout/${floorId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          rooms: cleanRooms, 
-          faculty: targetFaculty, 
-          mapImage 
-        })
+      const docName = floorId.charAt(0).toUpperCase() + floorId.slice(1) + "-Floor";
+      const docRef = doc(db, "layouts", docName);
+
+      // STAGE 2: FORBIDDEN: merge: true. Overwriting entire document.
+      await setDoc(docRef, {
+        floorId,
+        rooms: cleanRooms,
+        faculty: targetFaculty,
+        mapImage,
+        locked: true,
+        lastEdited: new Date().toISOString()
       });
 
-      localStorage.setItem(`layout_${floorId}`, JSON.stringify({ 
-        rooms: cleanRooms, 
-        faculty: targetFaculty, 
-        mapImage 
-      }));
-
+      console.log(`[Firestore] Successfully saved ${docName}`);
       setSaveStatus('saved');
       setTimeout(() => {
         setSaveStatus('idle');
         setIsEditMode(false);
         setIsLocked(true);
-        setRooms(cleanRooms);
-        setFaculty(targetFaculty);
-      }, 1000);
-    } catch (err) {
-      console.error("Save Error:", err);
+      }, 3000);
+    } catch (error) {
+      console.error('[Firestore] Save failed:', error);
+      alert("Failed to save to Firestore. Check console for details.");
       setSaveStatus('idle');
     }
   };
@@ -210,16 +190,30 @@ export default function FloorPlan() {
     console.log(`Boundary adjustment (${field}): ${delta}`);
   };
 
-  const handleResetDefault = () => {
-    if (!window.confirm("Reset this floor to original static layout? Current edits will be lost.")) return;
-    const staticData = floorsData[floorId];
-    if (staticData) {
-      setRooms(staticData.rooms || []);
-      setFaculty(staticData.faculty || []);
-      setMapImage(staticData.mapImage || null);
-      localStorage.removeItem(`layout_${floorId}`); // Clear cache to force clean start
-      setIsLocked(true);
-      alert("Layout reset to static defaults.");
+  /**
+   * STAGE 3: RESET = LOAD LAST SAVED (STRICT)
+   * Fetches fresh from Firestore to override any local UI changes.
+   */
+  const handleResetDefault = async () => {
+    if (!window.confirm("Reset this floor to the LAST SAVED Firestore state?")) return;
+    
+    const docName = floorId.charAt(0).toUpperCase() + floorId.slice(1) + "-Floor";
+    const docRef = doc(db, "layouts", docName);
+    
+    try {
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        setRooms(data.rooms || []);
+        setFaculty(data.faculty || []);
+        setMapImage(data.mapImage || null);
+        setIsLocked(true);
+        alert("Layout reset to last saved state.");
+      } else {
+        alert("No saved layout found in Firestore for this floor.");
+      }
+    } catch (error) {
+      console.error("[Firestore] Reset failed:", error);
     }
   };
 

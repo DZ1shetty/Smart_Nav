@@ -1,4 +1,4 @@
-import { IMG_BASE_URL } from '../../config';
+import { IMG_BASE_URL } from '../../config.js';
 
 export const ground = {
   buildingName: "APJ-BLOCK",
